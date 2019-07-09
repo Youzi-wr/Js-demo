@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <center>
+        <h1>子网掩码验证</h1>
+        <input type="text"
+               name="mask"
+               id="mask"
+               value="" />
+        <input type="button"
+               name="mytest"
+               id="mytest"
+               value="check_value"
+               onClick="test()" />
+    </center>
+</body>
+<script src="./mask/index.js"></script>
+<script type="text/javascript">
+
+    function test(MaskStr) {
+        // debugger;
+        mask('init');
+        setTimeout(function () {
+            mask('destroy');
+        }, 3000);
+        // alert("IP地址为： " + MaskStr + " 验证结果：" + validateMask(MaskStr));
+    }
+
+    function validateIP(what) {
+        if (what.search(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/) == -1)
+            return false;
+        var fs = 0,
+            ls = 0;
+        var myArray = what.split(/\./);
+        var i;
+        for (i = 0; i < 4; i++) {
+            if (!isNumeric(myArray[i]))
+                return false;
+
+            var t = atoi(myArray[i]); /* 每个域值范围0-255 */
+            if ((t < 0) || (t > 255))
+                return false;
+        }
+        fs = atoi(myArray[0]); //取第一位进行校验  
+        ls = atoi(myArray[3]); //取最后一位进行校验  
+
+        /* 主机部分不能全是1和0（第一位不能为255和0），网络部分不能全是0（最后一位不能为0） */
+        //if((fs == 255) || (fs ==0) || (ls == 0) || (ls == 255))  
+        if ((fs == 255) || (fs == 0)) {
+            return false;
+        }
+        return true;
+    }
+
+    function isNumeric(strval) {
+        var c;
+        for (var i = 0; i < strval.length; i++) {
+            c = strval.charAt(i);
+            if (c < "0" || c > "9") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    function atoi(strval) {
+        return parseInt(strval);
+    }
+
+    // console.log(validateIP('192.168.0.0'))
+    // console.log('------------------------------');
+
+    function validateMask(MaskStr) {
+        /* 有效性校验 */
+        var IPPattern = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/
+        if (!IPPattern.test(MaskStr)) return false;
+
+        /* 检查域值 */
+        var IPArray = MaskStr.split(".");
+        var ip1 = parseInt(IPArray[0]);
+        var ip2 = parseInt(IPArray[1]);
+        var ip3 = parseInt(IPArray[2]);
+        var ip4 = parseInt(IPArray[3]);
+        if (ip1 < 0 || ip1 > 255 /* 每个域值范围0-255 */
+            || ip2 < 0 || ip2 > 255
+            || ip3 < 0 || ip3 > 255
+            || ip4 < 0 || ip4 > 255) {
+            return false;
+        }
+
+        /* 检查二进制值是否合法 */
+        //拼接二进制字符串
+        var ip_binary = _checkIput_fomartIP(ip1) + _checkIput_fomartIP(ip2) + _checkIput_fomartIP(ip3) + _checkIput_fomartIP(ip4);
+
+        if (-1 != ip_binary.indexOf("01")) return false;
+        return true;
+    }
+
+
+    /**
+    * 函数名： _checkIput_fomartIP
+    *   函数功能： 返回传入参数对应的8位二进制值
+    *   函数作者： 236F(fuwei236#gmail.com)
+    * 传入参数： ip:点分十进制的值(0~255),int类型的值，
+    *   主调函数： validateMask
+    * 调用函数： 无
+    * 返回值:   ip对应的二进制值(如：传入255，返回11111111;传入1,返回00000001)
+    **/
+    function _checkIput_fomartIP(ip) {
+        return (ip + 256).toString(2).substring(1); //格式化输出(补零)
+    }
+
+    // console.log('------------------------------');
+</script>
+<script type="text/javascript">
+    //验证一般域名校验 
+    function checkNetURL() {
+        var netURL = document.getElementById("netURL");
+        //验证一般的域名 比如说 www.baidu.com 
+        var regStr = "^([a-zA-Z0-9-]+\\.){1,}(com|net|edu|miz|biz|cn|cc)$";
+        var re = new RegExp(regStr); //创建正则表达式对象 
+        //var re=/^([a-zA-Z0-9-]+\\.){1,}(com|net|edu|miz|biz|cn|cc)$/; 
+        if (!re.exec(netURL.value)) { //验证输入的字符串是否符合规则 
+            alert("您输入的网站URL地址有误！正确格式如 mail.brookes.com");
+            netURL.focus();
+            return;
+        }
+    }
+    //手机校验 
+    function iphoneRegExp() {
+        var iphone = document.getElementById("iphone").value;
+        var regStr = "^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$";
+        var re = new RegExp(regStr);
+        if (!re.test(iphone)) {
+            alert("规格错误，正确格式如152636363**（或以13,14,18开头的手机号码）");
+        }
+    }
+    //邮箱校验 (还有点bug) 
+    /*function emailRegExp(){ 
+    var email= document.getElementById("email").value; 
+    var regStr="^([a-zA-Z0-9\u4E00-\u9FA5]*[-_]?[a-zA-Z0-9]){1,}+@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$"; 
+    var re=new RegExp(regStr); 
+    if(!re.test(email)){ 
+    alert("规格错误，正确格式如152636363**（或以13,14,18开头的手机号码）"); 
+    //iphone.focus(); 
+    } 
+    }*/
+    //身份证校验 
+    function cardRegExp() {
+        var card = document.getElementById("card").value;
+        var regStr = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x)$)";
+        var re = new RegExp(regStr);
+        if (!re.test(card)) {
+            alert("输入不合法，正确格式为：4101821897020356**");
+        }
+    }
+    //港澳省份证 
+    function gangAocardRegExp() {
+        var card = document.getElementById("card").value;
+        var regStr = "[A-Z]{1,2}[0-9]{6}[(]{1}[A-Z0-9]{1}[)]{1}";
+        var re = new RegExp(regStr);
+        if (!re.test(card)) {
+            alert("港澳居民身份证输入不合法！正确格式如：A15263*(E)");
+        }
+    }
+    //残疾证 
+    function canJicardRegExp() {
+        var card = document.getElementById("card").value;
+        var regStr = "(^\\d{22}$)|(^\\d{20}$)";
+        var re = new RegExp(regStr);
+        if (!re.test(card)) {
+            alert("残疾证输入不合法!");
+        }
+    }
+    //邮政编码 
+    function postCardRegExp() {
+        var postCard = document.getElementById("postCard").value;
+        var regStr = "^[0-9]{6}$";
+        var re = new RegExp(regStr);
+        if (!re.test(postCard)) {
+            alert("输入不合法！正确格式如4500!");
+        }
+    }
+    //传真与固定电话校验 
+    function telRegExp() {
+        var tel = document.getElementById("tel").value;
+        var regStr = "((^\\d{11}$)|(^\\d{12}$))|(^\\d{3}-\\d{8}$)|(^\\d{4}-\\d{7}$)|(^\\d{4}-\\d{8}$)";
+        var re = new RegExp(regStr);
+        if (!re.test(tel)) {
+            alert("书写格式错误！正确格式如 0511-44052** 或 021-878888**");
+        }
+    }
+    //用户名校验，规则如下： 
+    //匹配帐号是否合法(字母开头，允许5-16字节，允许字母数字下划线 
+    function userNameRegExp() {
+        var userName = document.getElementById("userName").value;
+        var regStr = "^[a-zA-Z][a-zA-Z0-9_]{3,15}$";
+        var re = new RegExp(regStr);
+        if (!re.test(userName)) {
+            alert("必须以字母开头，后面跟4-15位数字，字母或下划线！");
+        }
+    }
+    //校验整数 
+    function numRegExp() {
+        var num = document.getElementById("num").value;
+        var regStr = "^[0-9]*[1-9][0-9]*$";
+        var re = new RegExp(regStr);
+        if (!re.test(num)) {
+            alert("填写格式错误，正确格式如：8080");
+        }
+    }
+    //校验小数 或者整数 
+    function numFontRegExp() {
+        var num = document.getElementById("num").value;
+        var regStr = "^(([0]{1,})|([0-9]{1,})[.]{1}[0-9]{1,})|[0-9]{1,}$";
+        var re = new RegExp(regStr);
+        if (!re.test(num)) {
+            alert("填写格式错误，正确格式为12.3");
+        }
+    }
+    //验证特殊字符^[^%$&@]{1,}$ 
+    function strRegExp() {
+        var str = document.getElementById("str").value;
+        var regStr = "^[^%$&@]{1,}$";
+        var re = new RegExp(regStr);
+        if (!re.test(str)) {
+            alert("不能包含特殊字符");
+        }
+    }
+    //验证真实姓名 
+    function nameRegExp() {
+        var name = document.getElementById("name").value;
+        var regStr = "((^[a-zA-Z]{1}([a-zA-Z_]){2,20})|(^[\u4E00-\u9FA5]{1}+[a-zA-Z0-9\u4E00-\u9FA5]{1,14}))$";
+        var re = new RegExp(regStr);
+        if (!re.test(name)) {
+            alert("应为2-15个汉字或3-21个英文字母");
+        }
+    }
+    ////验证护照 
+    function huzhoaRegExp() {
+        var huzhao = document.getElementById("huzhao").value;
+        var regStr = "^((14)|(15)[0-9]{7})|(G|S|D[0-9]{8})|((P.)|(S.)[0-9]{7})$";
+        var re = new RegExp(regStr);
+        if (!re.test(huzhao)) {
+            alert("护照输入不合法，正确格式如：G00106556");
+        }
+    }
+    //军官证 
+    function junGuanRegExp() {
+        var junguan = document.getElementById("junguan").value;
+        var regStr = "^[\u4E00-\u9FA5]{1}\\d{7}$";
+        var re = new RegExp(regStr);
+        if (!re.test(junguan)) {
+            alert("输入不合法！正确格式如：海6042**");
+        }
+    }
+    //文职干部校验 
+    function junGuanRegExp() {
+        var wenzhi = document.getElementById("wenzhi").value;
+        var regStr = "^[\u4E00-\u9FA5]{1}文\\d{4,12}$";
+        var re = new RegExp(regStr);
+        if (!re.test(wenzhi)) {
+            alert("文职干部证输入不合法！正确格式如：广文0816**");
+        }
+    }
+    //士兵证 
+    function shiBingRegExp() {
+        var shibing = document.getElementById("shibing").value;
+        var regStr = "^[\u4E00-\u9FA5]{1,3}\\d{4,12}$";
+        var re = new RegExp(regStr);
+        if (!re.test(shibing)) {
+            alert("士兵证输入不合法！正确格式如：鄂176340**");
+        }
+    }
+    //手机和固定电话校验 
+    function iphoneTelRegExp() {
+        var iphoneTel = document.getElementById("iphoneTel").value;
+        var regStr = "(((^\\d{11}$)|(^\\d{12}$))|(^\\d{3}-\\d{8}$)|(^\\d{4}-\\d{7}$)|(^\\d{4}-\\d{8}$))|(^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0-9]))\\d{8}$)$";
+        var re = new RegExp(regStr);
+        if (!re.test(iphoneTel)) {
+            alert("电话号码书写错误，不符合电话号码规格（如 0511-4405xxx 或 15236565xxx），请重新填写");
+        }
+    } 
+</script>
+
+</html>

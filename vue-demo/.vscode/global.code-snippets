@@ -1,0 +1,50 @@
+{
+	"For_Loop": {
+		"prefix": "for",
+		"scope": "javascript,typescript",
+		"body": [
+			"for (const ${2:element} of ${1:array}) {",
+			"\t$0",
+			"}"
+		],
+		"description": "For Loop"
+	},
+	"Create vue template": {
+		"prefix": "vue",
+		"body": [
+			"<template>",
+			"</template>",
+			"<script>",
+			"export default {",
+			"  name: \"${1:component_name}\",",
+			"  data () {",
+			"    return {",
+			"    };",
+			"  }",
+			"}",
+			"</script>",
+			"<style lang=\"${2:scss}\" scoped>",
+			"</style>"
+		],
+		"description": "Create vue template"
+	},
+	"Create vue demo template": {
+		"prefix": "vue-demo",
+		"body": [
+			"<!DOCTYPE html>",
+			"<html lang=\"en\">",
+			"<head>",
+			"<meta charset=\"UTF-8\">",
+			"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+			"<meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">",
+			"<title>Demo</title>",
+			"</head>",
+			"<body>\n",
+			"</body>",
+			"<script src=\"./vue.js\">\n",
+			"</script>",
+			"</html>"
+		],
+		"description": "Create vue demo template"
+	}
+}

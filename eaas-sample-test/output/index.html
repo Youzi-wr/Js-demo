@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>EaaS Starter</title>
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min_3ffbab3.css">
+  <link rel="stylesheet" type="text/css" href="/css/sample_7cb3032.css">
+
+</head>
+<body>
+  <div class="container-fluid d-flex flex-column justify-content-center align-items-center">
+    <div class="form-title">
+      EaaS Sample
+    </div>
+    <div class="card form-card">
+      <div class="card-body">
+		<div class="form-group">
+          <label for="appid">Session Name</label>
+          <input type="text" id="name" name="name" value="SessionName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="appid">App  ID</label>
+          <input type="text" id="appid" name="appid" value="APP00001-ZH-CN" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="">User ID</label>
+          <input type="text" id="userid" name="userid" value="123456" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="">File ID</label>
+          <input type="text" id="fileid" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="">File NAME</label>
+          <input type="text" id="fileName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="">__BIZ_HOST</label>
+          <input type="text" id="__BIZ_HOST" value="https://edit-sit.midea.com" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="">__EAAS_HOST</label>
+          <input type="text" id="__EAAS_HOST" value="https://192.168.13.37:8025" class="form-control">
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" id="filereadonly" class="form-check-input">
+            Readonly File
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" id="dfsMode" name="dfsMode" class="form-check-input">
+            DFS Mode
+          </label>
+        </div>
+        <div class="form-group">
+          <button id="btn-start" class="btn btn-primary btn-block">Start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/js/jquery-3.2.1.min_c9f5aee.js"></script>
+  <script src="/js/base64.min_c011e3b.js"></script>
+  <script src="/js/sample_3a42a61.js"></script>
+</body>
+</html>

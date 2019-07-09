@@ -1,0 +1,28 @@
+{
+    "res": {
+        "css/bootstrap.min.css": {
+            "uri": "/css/bootstrap.min_3ffbab3.css",
+            "type": "css"
+        },
+        "css/sample.css": {
+            "uri": "/css/sample_7cb3032.css",
+            "type": "css"
+        },
+        "js/base64.min.js": {
+            "uri": "/js/base64.min_c011e3b.js",
+            "type": "js",
+            "deps": [
+                "buffer"
+            ]
+        },
+        "js/jquery-3.2.1.min.js": {
+            "uri": "/js/jquery-3.2.1.min_c9f5aee.js",
+            "type": "js"
+        },
+        "js/sample.js": {
+            "uri": "/js/sample_3a42a61.js",
+            "type": "js"
+        }
+    },
+    "pkg": {}
+}

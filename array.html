@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge" />
+    <title>Array</title>
+</head>
+<style>
+    .divBG 
+{ 
+    background: gray; 
+    position: fixed; 
+    left: 0px; 
+    top: 0px; 
+    width: 100%; 
+    height: 100%; 
+    display: none; 
+    z-index: 20; 
+    filter: alpha(opacity=60); 
+    opacity: 0.5 !important; 
+}
+.PopUp 
+{ 
+    position: fixed; 
+    display: none; 
+    z-index: 50 !important; 
+    background-color: White; 
+    width: 900px; 
+    border-style: solid solid solid solid; 
+    border-width: 5px 5px 5px 5px; 
+    border-color: #cccc99; 
+    left: 50%; 
+    top: 50%; 
+    margin-top: -200px; /*--高度的一半--*/ 
+    margin-left: -450px; /*--宽度的一半--*/ 
+}
+</style>
+
+<body>
+    <div class="divBG">
+        <div class="PopUp">PopUp</div>
+    </div>
+</body>
+
+<script src="./underscore.js"></script>
+<script type="text/javascript">
+    let arr = [{
+        "menuId": 1763915712345920,
+        "menuName": "消息",
+        "firstPage": true,
+        "menuIndex": 0
+    }, {
+        "menuId": 1763916762343072,
+        "menuName": "任务",
+        "firstPage": false,
+        "menuIndex": 1
+    }, {
+        "menuId": 1763917602347888,
+        "menuName": "文档",
+        "firstPage": true,
+        "menuIndex": 2
+    }, {
+        "menuId": 1763919402345296,
+        "menuName": "工作空间",
+        "firstPage": false,
+        "menuIndex": 3
+    }, {
+        "menuId": 1963919402341696,
+        "menuName": "联系人",
+        "firstPage": false,
+        "menuIndex": 4
+    }];
+
+    let newList = [], filterList = [];
+
+    // 匹配firstPage为true,提取menuId的值
+    // newList = arr.filter(item => item.firstPage && item.menuId);
+    filterList = arr.map(item => item.firstPage && item.menuId); //[1763915712345920,false,1763917602347888,false,false]
+    newList = filterList.filter(item => item); //filter不改变原数组
+
+
+    document.write(JSON.stringify(filterList) + "</br>");
+    document.write(JSON.stringify(newList) + "</br>");
+
+    document.write('----------------------------------------' + "</br>")
+
+    var obj1 = [{ name: 'andy', age: '20' }, { name: 'joe', age: '23' }, { name: 'john', age: '30' }];
+    var obj2 = [{ name: 'joe', age: '23', job: 'teacher' }, { name: 'jerry', age: '23' }];
+
+    _.each(obj1, function (item) {
+        var index = _.find(obj2, {
+            'name': item.name
+        });
+        if (index) {
+            item = Object.assign(item, index);
+        }
+    });
+
+    document.write(JSON.stringify(obj1))
+
+</script>
+
+</html>
