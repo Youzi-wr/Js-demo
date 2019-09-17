@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">hello</div>
+</body>
+<script type="text/javascript">
+    var isOrdered = false;
+
+    function iteration(data, key) {
+        observal(data[key])
+        var dept = new Dep();
+        Object.defineProperty(data, key, {
+            enumerable: true,
+            configurable: true,
+            get: function (watcher) {
+                if (!isOrdered) {
+                    dept.add(watcher)
+                    console.log('在defineProperty中添加订阅器')
+                }
+                // return value;
+            },
+            set: function (value) {
+                console.log(`Object.defineProperty set: ${data[key]}`)
+                dept.notify();
+            }
+        })
+    }
+
+    //订阅者
+    function observal(obj) {
+        if (!obj || typeof obj !== 'object') return;
+        Object.keys(obj).forEach(key => {
+            iteration(obj, key);
+        })
+    }
+
+    //订阅器
+    function Dep() {
+        this.subs = [];
+    }
+
+    Dep.prototype = {
+        add: function (sub) {
+            this.subs.push(sub);
+
+            console.log('dep push')
+        },
+        notify: function () {
+            this.subs.forEach(function (sub) {
+                sub.update();
+            })
+
+            console.log('dep notify')
+        }
+    }
+
+    //监听者
+    function Watcher(vm, exp, cb) {
+        this.vm = vm;
+        this.exp = exp;
+        this.cb = cb;
+        this.ordered = false;
+        this.value = this.addDep();
+    }
+
+    Watcher.prototype = {
+        //更新view
+        update: function () {
+            this.value;
+            this.cb.call(this.vm, value);
+
+            console.log('watch update')
+        },
+        //添加订阅者
+        addDep: function () {
+            //通过触发get,在observal中订阅自己
+            this.vm.data[this.exp];
+            isOrdered = true;
+
+            console.log('watch addDep')
+        }
+    }
+
+    //绑定器
+    function SelfVue(data, el, exp) {
+        this.data = data;
+
+        observal(data);
+        // el.innerHTML = this.data[exp];
+        new Watcher(this, exp, function (value) {
+            el.innerHTML = value;
+            console.log('watch callbakc')
+        });
+    }
+
+    var ele = document.querySelector('#app');
+    var self = new SelfVue({
+        name: 'hi'
+    }, ele, 'name')
+
+    setTimeout(function () {
+        self.data.name = 'hhhh'
+    }, 2000)
+
+</script>
+
+</html>

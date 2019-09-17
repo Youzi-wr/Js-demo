@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">hello</div>
+</body>
+<script type="text/javascript">
+
+    let data = {
+        name: 'hello',
+        age: '20'
+    }
+
+    function iteration(data, key) {
+        var dept = new Dept();
+        Object.defineProperty(data, key, {
+            get: function (watcher) {
+                if (!Dept.target) {
+                    dept.add(watcher)
+                }
+                return value;
+            },
+            set: function (value) {
+                console.log(`${key}已经改变：${data[key]}`)
+                dept.notify();
+            }
+        })
+    }
+
+    //订阅者
+    function observal(obj) {
+        if (!obj || typeof obj !== 'Object') return;
+        Object.keys(data).forEach(key => {
+            iteration(data, key);
+        })
+    }
+
+    //订阅器
+    function Dep() {
+        this.subs = [];
+    }
+
+    Dep.prototype = {
+        add: function (sub) {
+            this.subs.push(sub);
+        },
+        notify: function () {
+            this.subs.forEach(function (sub) {
+                sub.update();
+            })
+        }
+    }
+
+    //监听者
+    function Watcher(vm, exp, cb) {
+        this.vm = vm;
+        this.exp = exp;
+        this.cb = cb;
+        this.value = get();
+    }
+
+    Watcher.prototype = {
+        //更新view
+        update: function (dom, value) {
+            //dom, value
+            dom.innerHTML = value;
+        },
+        //添加订阅者
+        addDep: function(){
+            //通过触发get,在observal中订阅自己
+            
+        }
+    }
+
+    //绑定器
+    function SelfVue(data, el, exp) {
+        // this.data = data;
+        observal(data);
+        // el.innerHTML = this.data[exp];
+        new Watcher(this, exp, function (value) {
+            el.innerHTML = value;
+        });
+    }
+
+    var ele = document.querySelector('#app');
+    var self = new SelfVue({
+        name: 'hi'
+    }, ele, 'name')
+
+</script>
+
+</html>

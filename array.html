@@ -10,34 +10,35 @@
     <title>Array</title>
 </head>
 <style>
-    .divBG 
-{ 
-    background: gray; 
-    position: fixed; 
-    left: 0px; 
-    top: 0px; 
-    width: 100%; 
-    height: 100%; 
-    display: none; 
-    z-index: 20; 
-    filter: alpha(opacity=60); 
-    opacity: 0.5 !important; 
-}
-.PopUp 
-{ 
-    position: fixed; 
-    display: none; 
-    z-index: 50 !important; 
-    background-color: White; 
-    width: 900px; 
-    border-style: solid solid solid solid; 
-    border-width: 5px 5px 5px 5px; 
-    border-color: #cccc99; 
-    left: 50%; 
-    top: 50%; 
-    margin-top: -200px; /*--高度的一半--*/ 
-    margin-left: -450px; /*--宽度的一半--*/ 
-}
+    .divBG {
+        background: gray;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        display: none;
+        z-index: 20;
+        filter: alpha(opacity=60);
+        opacity: 0.5 !important;
+    }
+
+    .PopUp {
+        position: fixed;
+        display: none;
+        z-index: 50 !important;
+        background-color: White;
+        width: 900px;
+        border-style: solid solid solid solid;
+        border-width: 5px 5px 5px 5px;
+        border-color: #cccc99;
+        left: 50%;
+        top: 50%;
+        margin-top: -200px;
+        /*--高度的一半--*/
+        margin-left: -450px;
+        /*--宽度的一半--*/
+    }
 </style>
 
 <body>
@@ -101,6 +102,23 @@
     });
 
     document.write(JSON.stringify(obj1))
+
+    document.write('----------------------------------------' + "</br>")
+
+    var data = [{ "id": 1, "name": "APP分类", "childList": [{ "id": 1750018127120384, "name": "云应用", "childList": [{ "id": 175, "name": "稳定器无" }, { "id": 176, "name": "微服务应用" }] }, { "id": 1750018748073984, "name": "网页应用" }] }]
+    function mapTreeData(treeData, level) {
+        return treeData.map((item, i) => {
+            item.title = item.name;
+            item.value = item.id;
+            item.key = level !== undefined ? level + `-${i}` : i;
+            if (item.childList) {
+                mapTreeData(item.childList, item.key)
+            }
+            return item;
+        })
+    }
+    var arrTree = mapTreeData(data)
+    console.log(arrTree)
 
 </script>
 
