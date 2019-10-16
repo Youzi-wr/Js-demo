@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .tool-tip {
+        display: none;
+        position: fixed;
+        top: 30px;
+        left: 50%;
+        margin-left: -50px;
+        padding: 7px 25px;
+        border-radius: 5px;
+    }
+
+    .tool-tip-success {
+        border: 1px solid rgb(183, 235, 143);
+        background-color: rgb(246, 255, 237);
+    }
+
+    .tool-tip-error {
+        border: 1px solid #ffa39e;
+        background-color: #fff1f0;
+    }
+</style>
+
+<body>
+</body>
+<script type="text/javascript">
+    function tip(type, text) {
+        let toolTip = document.getElementById('toolTip');
+        if (!toolTip) {
+            let ele = document.createElement("div");
+            ele.id = 'toolTip';
+            document.body.appendChild(ele);
+            toolTip = ele;
+        }
+
+        if (type == 'success') {
+            toolTip.className = "tool-tip tool-tip-success";
+        } else if (type == 'error') {
+            toolTip.className = "tool-tip tool-tip-error";
+        }
+
+        toolTip.innerHTML = text;
+        toolTip.style.display = 'block';
+        setTimeout(() => {
+            toolTip.style.display = 'none';
+        }, 2000)
+    }
+</script>
+
+</html>

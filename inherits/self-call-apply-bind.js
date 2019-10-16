@@ -23,11 +23,6 @@ say('ABC')
 //XYZ say hello to ABC.
 
 // --------------------- 模拟call ------------------
-// getYear.prototype.call = function () {
-//     var arr = this.arguments;
-//     this = arr[0].this;
-// }
-
 Function.prototype.myCall = function (context, ...args) {
     // 判断是否是undefined和null
     if (typeof context === 'undefined' || context === null) {
@@ -41,17 +36,6 @@ Function.prototype.myCall = function (context, ...args) {
 }
 
 // --------------------- apply ------------------
-// Function.prototype.myApply = function (context, [...arg]) {
-//     if (typeof context == undefined || typeof context == null) {
-//         return window;
-//     }
-
-//     let sym = Symbol();
-//     context[sym] = this;
-//     let fn = context[sym]([...arg]);
-//     delete context[sym];
-//     return fn;
-// }
 Function.prototype.myApply = function (context, args) {
     // 判断是否是undefined和null
     if (typeof context === 'undefined' || context === null) {
