@@ -34,6 +34,8 @@
 // child.sayName(); // my name is Child
 // child.sayAge(); // my age is 18
 
+
+
 // ES5
 function Parent(name) {
     this.name = name;
