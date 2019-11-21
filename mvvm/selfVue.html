@@ -22,16 +22,16 @@
         Object.defineProperty(data, key, {
             enumerable: true,
             configurable: true,
-            get: function (watcher) {
-                if (!isOrdered) {
-                    dept.add(watcher)
+            get: function () {
+                if (!isOrdered && Dep.target) {
+                    dept.add(Dep.target)
                     console.log('在defineProperty中添加订阅器')
                 }
                 // return value;
             },
             set: function (value) {
-                console.log(`Object.defineProperty set: ${data[key]}`)
-                dept.notify();
+                console.log(`Object.defineProperty set: ${value}`)
+                dept.notify(value);
             }
         })
     }
@@ -55,14 +55,16 @@
 
             console.log('dep push')
         },
-        notify: function () {
+        notify: function (value) {
             this.subs.forEach(function (sub) {
-                sub.update();
+                sub.update(value);
             })
 
             console.log('dep notify')
         }
     }
+
+    Dep.target = null;
 
     //监听者
     function Watcher(vm, exp, cb) {
@@ -75,8 +77,8 @@
 
     Watcher.prototype = {
         //更新view
-        update: function () {
-            this.value;
+        update: function (value) {
+            this.value = value;
             this.cb.call(this.vm, value);
 
             console.log('watch update')
@@ -84,7 +86,9 @@
         //添加订阅者
         addDep: function () {
             //通过触发get,在observal中订阅自己
+            Dep.target = this;
             this.vm.data[this.exp];
+            Dep.target = null;
             isOrdered = true;
 
             console.log('watch addDep')
