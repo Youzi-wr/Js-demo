@@ -27,17 +27,19 @@
         _gap_time = new Date().getTime() - _beforeUnload_time;
         if (_gap_time <= 5) {
             var log = localStorage.getItem('log')
-            log = log + '\n浏览器关闭: 间隔：' + _gap_time
-            localStorage.setItem('log', log + '发送session leave');
+            log = log + '\n浏览器关闭: 间隔：' + _gap_time + '发送session leave';
+            localStorage.setItem('log', log);
+            // downloadJson(log, 'close_log.txt');
         } else {
             var log = localStorage.getItem('log')
-            log = log + '\n浏览器刷新: 间隔：' + _gap_time
-            localStorage.setItem('log', log + '不发送session leave');
+            log = log + '\n浏览器刷新: 间隔：' + _gap_time + '不发送session leave'
+            localStorage.setItem('log', log);
         }
     }
     window.onbeforeunload = function (event) {
         _beforeUnload_time = new Date().getTime();
-        
+        event.returnValue = "确定离开？";
+
         if (is_fireFox) {//火狐关闭执行
             var log = localStorage.getItem('log')
             log = log + '\n火狐关闭: 间隔：' + _gap_time

@@ -6,13 +6,15 @@ function SelfVue(vm) {
     // this.mounted = mounted;
 
     // 观察者
-    observer(this.data);
+    observer(vm);
 
     // 模板解析
     new Compile(vm);
 
+    vm.mounted.call(vm);
+
     // vm['data']代理
-    proxyVue.call(this, exp);
+    // proxyVue.call(this, exp);
 
     // 观察者
     // new Watcher(this, exp, function (value) {
@@ -21,11 +23,11 @@ function SelfVue(vm) {
     // })
 }
 
-function proxyVue(exp) {
-    let vm = this;
-    Object.defineProperty(vm, exp, {
-        set(value) {
-            vm['data'][exp] = value;
-        }
-    })
-}
+// function proxyVue(exp) {
+//     let vm = this;
+//     Object.defineProperty(vm, exp, {
+//         set(value) {
+//             vm['data'][exp] = value;
+//         }
+//     })
+// }

@@ -1,6 +1,6 @@
 function Compile(vm) {
     this.vm = vm;
-    this.el = vm.el;
+    this.el = document.querySelector(vm.el);
     this.fragment = null;
 
     this.createFragment();
@@ -9,7 +9,7 @@ function Compile(vm) {
 Compile.prototype = {
     createFragment() {
         let fragment = document.createDocumentFragment();
-        let root = document.getElementById(this.el);
+        let root = this.el;
 
         // 🔴faster
         // let childNodes = root.childNodes;
@@ -28,23 +28,27 @@ Compile.prototype = {
 
         this.fragment = fragment;
         this.compileNodes(this.fragment);
+        this.el.appendChild(this.fragment);
     },
     compileNodes(parentNode) {
         let childNodes = parentNode.childNodes;
         let self = this;
-        console.log('childNodes', childNodes)
         childNodes.forEach(node => {
             let content = node.textContent;
             // let reg = /\{\{(.*)\}\}/g; //🔴如果这里是/ /g，reg.test(content)的结果为true/false交替
-            let reg = /\{\{(.*?)\}\}/g; //🔴加"？"匹配第一个{{ }}。不加"？"匹配第一个"{{"，和最后一个"}}"
+            let reg = /\{\{(.*?)\}\}/; //🔴加"？"匹配第一个{{ }}。不加"？"匹配第一个"{{"，和最后一个"}}"
             if (this.isTextNode(node) && reg.test(content)) {
-                // let exp = reg.exec(content);
-                // let exp = content.replace(reg, (match, key) => key);
-                content.match(reg).forEach(exp => {
-                    new Watcher(this.vm, exp, function (value) {
-                        self.updateText(node, value);
-                    })
+                let exp = reg.exec(content)[1];
+                new Watcher(this.vm, exp, function (value) {
+                    self.updateText(node, value);
                 })
+
+                // let exp = content.replace(reg, (match, key) => key);
+                // content.match(reg).forEach(exp => {
+                //     new Watcher(this.vm, exp, function (value) {
+                //         self.updateText(node, value);
+                //     })
+                // })
             } else if (this.isElementNode(node)) {
                 this.compileNodes(node);
             }
