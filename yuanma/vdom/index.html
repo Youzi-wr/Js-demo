@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #root {
+        border: 1px solid red;
+    }
+
+    .night {
+        background: black;
+        color: white;
+    }
+</style>
+
+<body>
+    <div id="root"></div>
+    <div>
+        <h6>Please click the button in order and open chrome console：</h5>
+            <button id="btn1">Step1: Add node</button>
+            <button id="btn2">Step2: Update text</button>
+            <button id="btn3">Step3: Change classname</button>
+    </div>
+</body>
+<script src="./element.js"></script>
+<script src="./diff.js"></script>
+<script>
+    // https://github.com/dongyuanxin/pure-virtual-dom/blob/master/diff.js
+    
+    /**
+     * <div>
+     *  <span>item 1</span>
+     * </div>
+     */
+    const a = el("div", {}, [
+        el("span", {}, ["item 1"])
+    ]);
+
+    /**
+     * <div>
+     *  <span>item 1</span>
+     *  <li>item 2</li>
+     * </div>
+     */
+    const b = el("div", {}, [
+        el("span", {}, ["item 1"]),
+        el("li", {}, ["item 2"])
+    ]);
+
+    /**
+     * <div>
+     *  <span>item 1</span>
+     *  <li>hello world!</li>
+     * </div>
+     */
+    const c = el("div", {}, [
+        el("span", {}, ["item 1"]),
+        el("li", {}, ["hello world!"])
+    ]);
+
+    /**
+     * <div class="night">
+     *  <span>item 1</span>
+     *  <li>hello world!</li>
+     * </div>
+     */
+    const d = el("div", { class: 'night' }, [
+        el("span", {}, ["item 1"]),
+        el("li", {}, ["hello world!"])
+    ]);
+
+    const $root = document.querySelector("#root");
+    updateEl($root, a);
+
+    const btns = document.querySelectorAll('button')
+    btns[0].addEventListener('click', () => {
+        updateEl($root, b, a);
+    })
+
+    btns[1].addEventListener('click', () => {
+        updateEl($root, c, b);
+    })
+
+    btns[2].addEventListener('click', () => {
+        updateEl($root, d, c);
+    })
+</script>
+
+</html>

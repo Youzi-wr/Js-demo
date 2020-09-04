@@ -1,0 +1,50 @@
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title></title>
+	</head>
+	<style type="text/css">
+		img {
+	background-color: #c1b9b9a1;
+    margin: 0px auto auto;
+    position: relative;
+    overflow: hidden;
+    min-width: 1024px;
+    width: 400px;
+    height: 400px;
+    z-index: 999;
+    cursor: url(data:image/bmp;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGklEQVR4Ae3AAQEAAACCIP+vbkhQAAAAwLsBECAAAa0mJyoAAAAASUVORK5CYII=) 3 3, pointer;
+}
+	</style>
+	<body>
+		<div>11</div>
+	</body>
+	<script type="text/javascript">
+		// Usage:
+loadImage('data:image/bmp;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGklEQVR4Ae3AAQEAAACCIP+vbkhQAAAAwLsBECAAAa0mJyoAAAAASUVORK5CYII=');
+
+function loadImage(src) {
+    var image = new Image;
+    image.onload = function() {
+        if ('naturalHeight' in this) {
+            if (this.naturalHeight + this.naturalWidth === 0) {
+                this.onerror();
+                return;
+            }
+        } else if (this.width + this.height == 0) {
+            this.onerror();
+            return;
+        }
+        // At this point, there's no error.
+        document.body.appendChild(image);
+    };
+    image.onerror = function() {
+        //display error
+        document.body.appendChild(
+            document.createTextNode('\nError loading as image: ' + this.src)
+        );
+    };
+    image.src = src;
+}
+	</script>
+	</html>

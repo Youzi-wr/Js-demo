@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text"
+           name=""
+           id="">
+</body>
+<script>
+    var log = localStorage.getItem('log')
+    log = log + '\n--------------分割线-----------'
+    localStorage.setItem('log', log)
+    console.log(log)
+
+    var _beforeUnload_time = 0, _gap_time = 0;
+    var is_fireFox = navigator.userAgent.indexOf("Firefox") > -1;//是否是火狐浏览器
+    window.onunload = function () {
+        _gap_time = new Date().getTime() - _beforeUnload_time;
+        if (_gap_time <= 5) {
+            var log = localStorage.getItem('log')
+            log = log + '\n浏览器关闭: 间隔：' + _gap_time + '发送session leave';
+            localStorage.setItem('log', log);
+            // downloadJson(log, 'close_log.txt');
+        } else {
+            var log = localStorage.getItem('log')
+            log = log + '\n浏览器刷新: 间隔：' + _gap_time + '不发送session leave'
+            localStorage.setItem('log', log);
+        }
+    }
+    window.onbeforeunload = function (event) {
+        _beforeUnload_time = new Date().getTime();
+        event.returnValue = "确定离开？";
+
+        if (is_fireFox) {//火狐关闭执行
+            var log = localStorage.getItem('log')
+            log = log + '\n火狐关闭: 间隔：' + _gap_time
+            localStorage.setItem('log', log);
+        }
+    }
+    function downloadJson(data, fileName) {
+        var url = "data:text/json;charset=utf-8," + encodeURIComponent(data)
+        downloadURL(url, fileName);
+    };
+
+    function downloadURL(data, fileName) {
+        var a;
+        a = document.createElement('a');
+        a.href = data;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        a.click();
+        a.remove();
+    }
+</script>
+
+</html>

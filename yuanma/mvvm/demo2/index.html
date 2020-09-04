@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>self-vue</title>
+</head>
+<style>
+    #app {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div id="app">
+        wqdqdq
+        <h2>{{title}} -- {{age}}</h2>
+        <input v-model="name">
+        <h1><span>hi,</span>{{name}}</h1>
+        <button v-on:click="clickMe">click me!</button>
+    </div>
+</body>
+<script src="./observer.js"></script>
+<script src="./watcher.js"></script>
+<script src="./compile.js"></script>
+<script src="./index.js"></script>
+<script type="text/javascript">
+    new SelfVue({
+        el: '#app',
+        data: {
+            title: 'hello world',
+            name: 'canfoo'
+        },
+        methods: {
+            clickMe: function () {
+                this.title = 'hello world';
+            }
+        },
+        mounted: function () {
+            window.setTimeout(() => {
+                this.title = '你好';
+                console.log(this.title)
+            }, 1000);
+        }
+    });
+
+    // let vm = new SelfVue({
+    //     title: 'hello world'
+    // }, 'title', document.getElementById('app'));
+
+    // setTimeout(function () {
+    //     vm.title = 'hi'
+    // }, 1000)
+    
+</script>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于margin边距的应用</title>
+</head>
+<style>
+    /* 负边距会改变元素在文档流中的位置，及改变宽度 */
+    /* https://www.cnblogs.com/2050/archive/2012/08/13/2636467.html */
+    
+    /* 值得考虑的一个问题是：这里的宽高都需要固定，而实际情况中很少会固宽 */
+    body,
+    ul,
+    li {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul,
+    li {
+        list-style: none;
+    }
+
+    .container {
+        height: 210px;
+        width: 460px;
+        border: 5px solid #000;
+    }
+
+    ul {
+        height: 210px;
+        overflow: hidden;
+        /*一个负的margin-right,相当于把ul的宽度增加了20px*/
+        margin-right: -20px;
+    }
+
+    li {
+        height: 100px;
+        width: 100px;
+        background: #09F;
+        float: left;
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <ul>
+            <li>子元素1</li>
+            <li>子元素2</li>
+            <li>子元素3</li>
+            <li>子元素4</li>
+            <li>子元素5</li>
+            <li>子元素6</li>
+            <li>子元素7</li>
+            <li>子元素8</li>
+        </ul>
+    </div>
+</body>
+
+</html>

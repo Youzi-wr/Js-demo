@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://www.jianshu.com/p/431eb22ff924"></a>
+    <input type="text">
+</body>
+<script>
+
+    window.onbeforeunload = (event) => {
+        var store = localStorage.getItem('store');
+        store = store + ' onbeforeunload';
+        localStorage.setItem('store', store)
+        event.returnValue = "";
+        downloadJson('onbeforeunload', 'onbeforeunload')
+
+        // sessionStorage.setItem('leave', 'leave true')
+    };
+
+    window.onunload = (event) => {
+        var store = localStorage.getItem('store');
+        store = store + ' onunload';
+        localStorage.setItem('store', store)
+        downloadJson('onunload', 'onunload')
+
+        // var data = sessionStorage.getItem('leave')
+        // downloadURL(data, data)
+    };
+
+    function downloadJson(data, fileName) {
+        var url = "data:text/json;charset=utf-8," + encodeURIComponent(data)
+        downloadURL(url, fileName);
+    };
+
+    function downloadURL(data, fileName) {
+        var a;
+        a = document.createElement('a');
+        a.href = data;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.style = 'display: none';
+        a.click();
+        a.remove();
+    }
+</script>
+
+</html>

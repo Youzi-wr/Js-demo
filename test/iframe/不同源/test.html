@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body onhashchange="alert('test.html hash change')">
+    <input type="button" value="test" onclick="buttonClick()">
+    <iframe src="test2.html" id="tt"></iframe>
+</body>
+
+<script>
+    function buttonClick() {
+        document.getElementById('tt').src = 'test2.html#bbb'
+    }
+
+    addEventListener('message', e => {
+        // e.data为子页面发送的数据
+        console.log(e.data)
+    })
+</script>
+
+</html>

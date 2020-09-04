@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    var arr = [{
+        autId: '0-0',
+        children: [{
+            autId: '0-0-0'
+        }, {
+            autId: '0-0-1'
+        }]
+    }, {
+        autId: '0-1',
+        children: [{
+            autId: '0-1-0'
+        }]
+    }, {
+        autId: '0-2',
+    }];
+
+    function reverChild(children) {
+        return children.reduce(function (child, item) {
+            if (item.children) {
+                item.children = reverChild(item.children)
+            }
+            if (!item["autId"] || authSet.indexOf(item["autId"]) != -1) {
+                child.push(item);
+            }
+            return child;
+        }, [])
+    }
+
+    var authSet = ['0-0', '0-0-1', '0-1', '0-1-0'];
+
+    var arr2 = reverChild(arr);
+
+    console.log(arr2)
+</script>
+
+</html>

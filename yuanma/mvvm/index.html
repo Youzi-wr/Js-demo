@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="name">hi</div>
+</body>
+
+<script>
+    // ------------------ observer ----------------------
+    function defineReactive(data, key) {
+        observer(data[key]);
+
+        let dep = new Dept();
+        let value;
+
+        Object.defineProperty(data, key, {
+            enumerable: true,
+            configurable: true,
+            get: function (val) {
+                if (Dept.target) {
+                    dep.addSelf(Dept.target);
+                    value = Dept.target.value;
+                }
+                return val;
+            },
+            set: function (newVal) {
+                if (value == newVal) return;
+
+                value = newVal;
+                dep.update(newVal);
+            }
+        })
+    }
+
+    function observer(data) {
+        if (!data || typeof data !== 'object') {
+            return
+        }
+
+        Object.keys(data).forEach(key => {
+            defineReactive(data, key)
+        })
+    }
+
+    // ------------------ watcher ----------------------
+    function Watcher(vm, exp, updateDomFun) {
+        this.vm = vm;
+        this.exp = exp;
+        this.updateDomFun = updateDomFun;
+        this.value = this.get();
+    }
+
+    Watcher.prototype = {
+        notify: function (newVal) {
+            this.value = newVal;
+            this.updateDomFun.call(this.vm, newVal)
+        },
+        get: function () {
+            Dept.target = this;
+            this.value = this.vm.data[this.exp];
+            Dept.target = null;
+        }
+    }
+
+    Dept.target = null;
+
+    function Dept() {
+        this.subs = [];
+    }
+
+    Dept.prototype = {
+        addSelf: function (watcher) {
+            this.subs.push(watcher)
+        },
+        update: function (val) {
+            this.subs.forEach(sub => {
+                sub.notify(val);
+            })
+        }
+    }
+
+    // ------------关联watcher、observer---------------------
+    function SelfVue(vm, el, exp) {
+        observer(vm.data)
+
+        new Watcher(vm, exp, function (val) {
+            el.innerHTML = val;
+        })
+
+        Object.keys(vm.data).forEach(key => {
+            this.proxyKeys(vm.data, key)
+        })
+
+        this.data = vm;
+        return this;    //注意3：这里不同于直接返回vm
+    }
+
+    console.log(SelfVue.prototype)
+
+    SelfVue.prototype = {           //注意1：这种写法会覆盖掉constructor属性
+        proxyKeys: function (data, key) {
+            let self = this;
+            Object.defineProperty(this, key, {
+                enumerable: true,
+                configurable: true,
+                get: function () {
+                    return self.data[key];
+                },
+                set: function (newVal) {
+                    self.data[key] = newVal;    //注意2：这里的self.data[key]不同于data[key]
+                }
+            })
+        }
+    }
+
+    console.log(SelfVue.prototype)  //见注意1
+
+    // --------------------------------------------------
+    let el = document.querySelector('.name');
+
+    let vue = new SelfVue({
+        data: {
+            name: 'hi'
+        }
+    }, el, 'name');
+
+    setTimeout(function () {
+        vue.name = 'hello'  //见注意3   //要想操作造函数静态属性，通过拓展构造函数原型链方法实现
+        console.log(vue.name)   //见注意2
+    }, 2000)
+</script>
+
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    @charset "utf-8";
+
+    body {
+        background-color: #151632;
+    }
+
+    /* 水波纹 start*/
+    .water-box {
+        width: 191px;
+        height: 191px;
+        margin: 50px auto;
+    }
+
+    .center-icon {
+        position: relative;
+        width: 191px;
+        height: 191px;
+        text-align: center;
+        background: url("http://exd.design/wp-content/uploads/2019/01/center-icon.png") no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .circle-center.first {
+        display: inline-block;
+        width: 84%;
+        height: 84%;
+        background: #345382;
+        border-radius: 100%;
+        margin: 8%;
+    }
+
+    .circle-center.second {
+        display: inline-block;
+        width: 88%;
+        height: 88%;
+        background: #446fa8;
+        border-radius: 100%;
+        margin: 6%;
+    }
+
+    .circle-center.third {
+        display: inline-block;
+        width: 82%;
+        height: 82%;
+        background: #65acf6;
+        border-radius: 100%;
+        margin: 9%;
+    }
+
+    .circle-center.center {
+        position: absolute;
+        left: 25%;
+        top: 25%;
+        display: inline-block;
+        width: 50%;
+        height: 50%;
+        background: url("http://exd.design/wp-content/uploads/2019/01/center.png") no-repeat;
+        background-size: 100% 100%;
+        z-index: 5;
+    }
+
+    @-webkit-keyframes waterScale {
+        0% {
+            -webkit-transform: scale(0.6);
+        }
+
+        30% {
+            -webkit-transform: scale(1);
+        }
+
+        50% {
+            -webkit-transform: scale(1);
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes waterScale {
+        0% {
+            transform: scale(0.6);
+        }
+
+        30% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1);
+        }
+
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .circle-center.first,
+    .circle-center.second,
+    .circle-center.third {
+        -webkit-animation: waterScale 4s ease-in-out 0s infinite normal;
+        animation: waterScale 4s ease-in-out 0s infinite normal;
+    }
+
+    /* 水波纹 end*/
+
+
+    /* 语言输入-1  start */
+    .wave-box {
+        position: relative;
+        width: 288px;
+        height: 55px;
+        margin: 100px auto;
+        overflow: hidden;
+    }
+
+    .wave-shadow {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 2;
+        width: 288px;
+        height: 55px;
+        background: url(http://exd.design/wp-content/uploads/2019/01/shadow.png) no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .wave-inner {
+        position: absolute;
+        width: 288px;
+        height: 55px;
+        z-index: 1;
+    }
+
+    .wave {
+        position: absolute;
+        left: 0;
+        width: 200%;
+        height: 55px;
+        background-image: url(http://exd.design/wp-content/uploads/2019/01/wave.png);
+        background-size: 50% 55px;
+        background-repeat: repeat-x;
+        background-position: center;
+        transform-origin: center;
+    }
+
+    @keyframes moveWave {
+        0% {
+            transform: translateX(0) scaleY(1)
+        }
+
+        50% {
+            transform: translateX(-25%) scaleY(0.55)
+        }
+
+        100% {
+            transform: translateX(-50%) scaleY(1)
+        }
+    }
+
+    .wave-box .wave {
+        animation: moveWave 1s linear infinite;
+    }
+
+    /* 语言输入-1 end */
+
+
+    /* 语言输入-2  start */
+    .loader-box {
+        position: relative;
+        width: 175px;
+        height: 100px;
+        margin: 100px auto;
+    }
+
+    .loader {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        margin: auto;
+        width: 175px;
+        height: 100px;
+    }
+
+    .loader span {
+        display: block;
+        float: left;
+        width: 7px;
+        height: 20%;
+        border-radius: 14px;
+        margin-right: 5px;
+        margin-top: 25%;
+        background: #eee;
+    }
+
+    .loader span:last-child {
+        margin-right: 0px;
+    }
+
+    @keyframes load {
+        0% {
+            background: #eee;
+            margin-top: 25%;
+            height: 20%;
+        }
+
+        50% {
+            background: #666;
+            height: 100%;
+            margin-top: 0%;
+        }
+
+        100% {
+            background: #eee;
+            height: 20%;
+            margin-top: 25%;
+        }
+    }
+
+    .loader span:nth-child(1) {
+        animation: load 1.8s 1.4s infinite linear;
+    }
+
+    .loader span:nth-child(2) {
+        animation: load 1.8s 1.2s infinite linear;
+    }
+
+    .loader span:nth-child(3) {
+        animation: load 1.8s 1s infinite linear;
+    }
+
+    .loader span:nth-child(4) {
+        animation: load 1.8s 0.8s infinite linear;
+    }
+
+    .loader span:nth-child(5) {
+        animation: load 1.8s 0.6s infinite linear;
+    }
+
+    .loader span:nth-child(6) {
+        animation: load 1.8s 0.4s infinite linear;
+    }
+
+    .loader span:nth-child(7) {
+        animation: load 1.8s 0.2s infinite linear;
+    }
+
+    .loader span:nth-child(8) {
+        animation: load 1.8s 0s infinite linear;
+    }
+
+    .loader span:nth-child(9) {
+        animation: load 1.8s 0.2s infinite linear;
+    }
+
+    .loader span:nth-child(10) {
+        animation: load 1.8s 0.4s infinite linear;
+    }
+
+    .loader span:nth-child(11) {
+        animation: load 1.8s 0.6s infinite linear;
+    }
+
+    .loader span:nth-child(12) {
+        animation: load 1.8s 0.8s infinite linear;
+    }
+
+    .loader span:nth-child(13) {
+        animation: load 1.8s 1s infinite linear;
+    }
+
+    .loader span:nth-child(14) {
+        animation: load 1.8s 1.2s infinite linear;
+    }
+
+    .loader span:nth-child(15) {
+        animation: load 1.8s 1.4s infinite linear;
+    }
+
+    /* 语言输入-2 end */
+
+
+    /* 带动画的Wifi图标  start */
+    .wifi-box {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 100px auto;
+    }
+
+    .wifi-symbol {
+        position: absolute;
+        top: 50%;
+        display: inline-block;
+        width: 150px;
+        height: 150px;
+        margin-top: -187.5px;
+        margin-left: 75px;
+        -ms-transform: rotate(-45deg) translate(-100px);
+        -moz-transform: rotate(-45deg) translate(-100px);
+        -o-transform: rotate(-45deg) translate(-100px);
+        -webkit-transform: rotate(-45deg) translate(-100px);
+        transform: rotate(-45deg) translate(-100px);
+    }
+
+    .wifi-symbol .wifi-circle {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        display: block;
+        width: 100%;
+        height: 100%;
+        font-size: 21px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        border-color: #00d08e;
+        border-style: solid;
+        border-width: 1em 1em 0 0;
+        -webkit-border-radius: 0 100% 0 0;
+        border-radius: 0 100% 0 0;
+        opacity: 0.2;
+    }
+
+    .wifi-symbol .wifi-circle.first {
+        -webkit-animation: wifiAnimation1 2s 1.2s infinite;
+        animation: wifiAnimation1 2s 1.2s infinite;
+    }
+
+    .wifi-symbol .wifi-circle.second {
+        width: 5em;
+        height: 5em;
+        -webkit-animation: wifiAnimation2 2s 0.8s infinite;
+        animation: wifiAnimation2 2s 0.8s infinite;
+    }
+
+    .wifi-symbol .wifi-circle.third {
+        width: 3em;
+        height: 3em;
+        -webkit-animation: wifiAnimation3 2s 0.4s infinite;
+        animation: wifiAnimation3 2s 0.4s infinite;
+    }
+
+    .wifi-symbol .wifi-circle.fourth {
+        width: 1em;
+        height: 1em;
+        -webkit-animation: wifiAnimation4 2s infinite;
+        animation: wifiAnimation4 2s infinite;
+    }
+
+    @-webkit-keyframes wifiAnimation4 {
+        0% {
+            opacity: 0.2;
+        }
+
+        20% {
+            opacity: 0.9;
+        }
+
+        80% {
+            opacity: 0.9;
+        }
+
+        81% {
+            opacity: 0.2;
+        }
+
+        100% {
+            opacity: 0.2;
+        }
+    }
+
+    @-webkit-keyframes wifiAnimation3 {
+        0% {
+            opacity: 0.2;
+        }
+
+        20% {
+            opacity: 0.9;
+        }
+
+        60% {
+            opacity: 0.9;
+        }
+
+        61% {
+            opacity: 0.2;
+        }
+
+        100% {
+            opacity: 0.2;
+        }
+    }
+
+    @-webkit-keyframes wifiAnimation2 {
+        0% {
+            opacity: 0.2;
+        }
+
+        20% {
+            opacity: 0.9;
+        }
+
+        40% {
+            opacity: 0.9;
+        }
+
+        41% {
+            opacity: 0.2;
+        }
+
+        100% {
+            opacity: 0.2;
+        }
+    }
+
+    @-webkit-keyframes wifiAnimation1 {
+        0% {
+            opacity: 0.2;
+        }
+
+        20% {
+            opacity: 0.9;
+        }
+
+        21% {
+            opacity: 0.2;
+        }
+
+        100% {
+            opacity: 0.2;
+        }
+    }
+
+    /* 带动画的Wifi图标  end */
+</style>
+
+<body>
+    <!-- 水波纹 start-->
+    <div class="water-box">
+        <div class="center-icon tc">
+            <span class="circle-center first">
+                <em class="circle-center second">
+                    <i class="circle-center third"></i>
+                </em>
+            </span>
+            <i class="circle-center center"></i>
+        </div>
+    </div>
+    <!-- 水波纹  end-->
+
+    <!-- 语言输入-1  start-->
+    <div class="wave-box">
+        <div class="wave-shadow"></div>
+        <div class="wave-inner">
+            <div class="wave"></div>
+        </div>
+    </div>
+    <!-- 语言输入-1 end-->
+
+    <!-- 语言输入-2  start-->
+    <div class="loader-box">
+        <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    <!-- 语言输入-2 end-->
+
+    <!-- 带动画的Wifi图标  start-->
+    <div class="wifi-box">
+        <div class="wifi-symbol">
+            <div class="wifi-circle first"></div>
+            <div class="wifi-circle second"></div>
+            <div class="wifi-circle third"></div>
+            <div class="wifi-circle fourth"></div>
+        </div>
+    </div>
+    <!-- 带动画的Wifi图标  end-->
+</body>
+
+</html>

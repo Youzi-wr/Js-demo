@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .wrapper {
+        border: 1px solid black;
+        /* padding: 10px; */
+    }
+
+    /* 这种方法叫做clearfix：清除子元素浮动 */
+    .wrapper::after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+    /* clear:应用于非浮动块(当前块)时，它将非浮动块(当前块)的边框边界移动到所有相关浮动元素外边界的下方。
+    这个非浮动块的垂直外边距会折叠（垂直margin会重叠, border不重叠） */
+    .both {
+        border: 1px solid black;
+        clear: right;
+    }
+
+    .black {
+        float: left;
+        margin: 0;
+        background-color: black;
+        color: #fff;
+        width: 20%;
+    }
+
+    .red {
+        float: right;
+        margin: 0;
+        background-color: pink;
+        width: 20%;
+        border: 1px solid;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <p class="black">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus sit amet diam. Duis mattis
+            varius dui. Suspendisse eget dolor. Fusce pulvinar lacus ac dui.</p>
+        <p class="red">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus sit amet diam. Duis mattis
+            varius dui. Suspendisse eget dolor.</p>
+        <p class="both">This paragraph clears both.This paragraph clears both.This paragraph clears both.This paragraph clears both.</p>
+    </div>
+</body>
+
+</html>
