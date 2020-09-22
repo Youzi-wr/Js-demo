@@ -113,6 +113,6 @@ function fn() {
 }
 let fe = fn.bind(obj);
 
-// console.log(fe()); // 1  里面this是obj
-// console.log(obj); // { a: 1 }
-// console.log(new fe()); // 里面this是当前创建实例对象 { b: 100 }
+console.log(fe()); // 1  里面this是obj
+console.log(obj); // { a: 1 }
+console.log(new fe()); // 里面this是当前创建实例对象 { b: 100 }
