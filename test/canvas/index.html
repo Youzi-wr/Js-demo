@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8">
+    <title>HTML Canvas Dotted Lines</title>
+    <style type="text/css"
+           media="screen">
+        body {
+            background: #ddd;
+            text-align: center;
+        }
+
+        canvas {
+            margin: 2em auto;
+            display: block;
+            border: 1px solid #666;
+        }
+
+        label {
+            padding-right: 2em
+        }
+    </style>
+    <script type="text/javascript"
+            src="excanvas.js"></script>
+    <script type="text/javascript"
+            src="jCanvaScript.1.5.15.min.js"></script>
+</head>
+
+<body>
+    <!--这个地方需要注意，在IE下面经过转换如果不在这里设置canvas的高和宽就会造成画布很小-->
+    <canvas width="800"
+            height="600"></canvas>
+    <p>
+        <label>Line Width: <input id="width"
+                   value="3"
+                   size="1"></label>
+        <label>Dashes/Gaps: <input id="dashes"
+                   value="10 10"
+                   size="15"></label>
+        <label>Line Cap: <select id="linecap">
+                <option>butt</option>
+                <option selected>round</option>
+                <option>square</option>
+            </select></label>
+    </p>
+
+    <!--这个是老外写的用canvas画虚线的方法，直接使用-->
+    <script type="text/javascript"
+            charset="utf-8">
+
+                // gsap.to(graph, { duration: 2.5, ease: CustomEase.create("custom", "M0,0.558 C0.343,0.148 0.739,0.286 0.604,0.37 0.346,0.531 0.308,0.046 1,0 "), y: -500 });
+
+
+                if (window.CanvasRenderingContext2D && CanvasRenderingContext2D.prototype.lineTo) {
+                    CanvasRenderingContext2D.prototype.dashedLine = function (x, y, x2, y2, dashArray) {
+                        if (!dashArray) dashArray = [10, 5];
+                        var dashCount = dashArray.length;
+                        this.moveTo(x, y);
+                        var dx = (x2 - x), dy = (y2 - y);
+                        var slope = dy / dx;
+                        var distRemaining = Math.sqrt(dx * dx + dy * dy);
+                        var dashIndex = 0, draw = true;
+                        while (distRemaining >= 0.1 && dashIndex < 10000) {
+                            var dashLength = dashArray[dashIndex++ % dashCount];
+                            if (dashLength == 0) dashLength = 0.001; // Hack for Safari
+                            if (dashLength > distRemaining) dashLength = distRemaining;
+                            var xStep = Math.sqrt(dashLength * dashLength / (1 + slope * slope));
+                            x += xStep
+                            y += slope * xStep;
+                            this[draw ? 'lineTo' : 'moveTo'](x, y);
+                            distRemaining -= dashLength;
+                            draw = !draw;
+                        }
+                        // Ensure that the last segment is closed for proper stroking
+                        //this.moveTo(0,0);
+                    }
+                }
+            </script>
+
+    <script type="text/javascript"
+            charset="utf-8">
+                var c = document.getElementsByTagName('canvas')[0];
+                c.width = 800; c.height = 600;
+                var defaultX = 350, defaultY = 350;
+                function drawArr(x, y) {
+                    //值初始化，default用于页面没有点击的时候初始化。
+                    var x, y, arr;
+                    if (0 == arguments.length) {
+                        x = 667;
+                        y = 470;
+                    }
+                    else {
+                        x = x;
+                        y = y;
+                    }
+                    var ctx = c.getContext('2d');
+                    ctx.strokeStyle = 'black';
+                    //这3个是用来获取页面的自动设置配置。
+                    var width = document.getElementById('width');
+                    var linecap = document.getElementById('linecap');
+                    var dashes = document.getElementById('dashes');
+                    //这个是核心用来画每个线段。
+                    var drawDashes = function () {
+                        ctx.clearRect(0, 0, c.width, c.height);
+                        var dashGapArray = dashes.value.replace(/^\s+|\s+$/g, '').split(/\s+/);
+                        if (!dashGapArray[0] || (dashGapArray.length == 1 && dashGapArray[0] == 0)) return;
+                        ctx.lineWidth = width.value;
+                        ctx.lineCap = linecap.value;
+                        ctx.beginPath();
+                        ctx.fillStyle = "#8BC54B";
+                        ctx.strokeStyle = 'rgb(0, 0, 100)'
+                        //开始画虚线。
+                        //当 x > 起始点的x坐标（即点击点 在起始点的右边）的时候 不需要 改变这4个坐标，但是当x < 起始点的X坐标（点击点在起始点左边的时候）需要改变这4个坐标的位置
+                        if (x > defaultX) {
+                            ctx.dashedLine(defaultX, defaultY, x, y, dashGapArray);
+                        }
+                        else {
+                            ctx.dashedLine(x, y, defaultX, defaultY, dashGapArray);
+                        }
+                        //虚线画完了开始画箭头的4个线段
+                        //计算4个点的坐标
+                        arr = jisuan(x, y);
+                        //设定开始点。
+                        ctx.moveTo(arr[0], arr[1]);
+                        ctx.lineTo(x, y)
+                        ctx.lineTo(arr[2], arr[3]);
+
+                        //下面这个计算是用来在箭头与虚线的交叉点。直角三角形计算原理。。
+                        // ctx.lineTo(x - parseInt(25 * Math.cos(arr[4] * Math.PI / 180)), y - parseInt(25 * Math.sin(arr[4] * Math.PI / 180)));
+                        // ctx.lineTo(arr[0], arr[1]);
+                        // ctx.closePath();
+
+                        ctx.stroke();
+                    };
+                    drawDashes();
+                    width.onkeyup = drawDashes;
+                    linecap.onchange = drawDashes;
+                    dashes.onkeyup = drawDashes;
+                }
+                //该函数用来根据鼠标点击点 计算箭头4个点的坐标，在JS中cos和SIN都是计算的弧度，所以需要转换。至于计算方法属于属性范畴这里不累述。
+                //对于该函数，如果需要修改箭头的大小 只需修改 25: 箭头两边的长度； 35:箭头与中间虚线的角度即可。
+                function jisuan(x, y) {
+                    var angle = parseInt(Math.atan2(y - defaultX, x - defaultY) / Math.PI * 180);
+                    var arr = [];
+                    arr[0] = x - parseInt(25 * Math.cos(Math.PI / 180 * (angle - 35)));
+                    arr[1] = y - parseInt(25 * Math.sin(Math.PI / 180 * (angle - 35)));
+                    arr[2] = x - parseInt(25 * Math.cos(Math.PI / 180 * (angle + 35)));
+                    arr[3] = y - parseInt(25 * Math.sin(Math.PI / 180 * (angle + 35)));
+                    arr[4] = angle
+                    return arr;
+                }
+                drawArr();
+                document.body.onmousedown = function (event) {
+                    var event = event || window.event;
+                    var mousePos = getMousePos(event);
+                    drawArr(mousePos.x, mousePos.y);
+                }
+
+
+
+
+                getMousePos = function (event) {
+                    if (event.pageX || event.pageY) {
+                        mousePos = {
+                            x: event.pageX,
+                            y: event.pageY
+                        };
+                    }
+                    /*ie 与 ff的边界 处理不同*/
+                    if (!+"\v1") {
+                        mousePos = {
+                            x: event.clientX,
+                            y: event.clientY
+                        }
+                    }
+                    else {
+                        mousePos = {
+                            x: event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft,
+                            y: event.clientY + document.body.scrollTop + document.documentElement.scrollTop
+                        }
+                    }
+                    //return mousePos
+                    //程序到这里就是一个标准获取页面上鼠标的坐标函数，下面的代码是因为 画布的点不是以浏览器的左上角为起始点所以需要减去多余的距离方法如下：
+                    var pos = c.getBoundingClientRect();
+                    mousePos.x = mousePos.x - pos.left;
+                    mousePos.y = mousePos.y - pos.top;
+                    return mousePos;
+                }
+            </script>
+</body>
+
+</html>
