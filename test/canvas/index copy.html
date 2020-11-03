@@ -114,7 +114,6 @@
                         //开始画虚线。
                         //当 x > 起始点的x坐标（即点击点 在起始点的右边）的时候 不需要 改变这4个坐标，但是当x < 起始点的X坐标（点击点在起始点左边的时候）需要改变这4个坐标的位置
                         if (x > defaultX) {
-                            // ctx.quadraticCurveTo(defaultX, defaultY, x, y, dashGapArray);
                             ctx.dashedLine(defaultX, defaultY, x, y, dashGapArray);
                         }
                         else {
@@ -153,13 +152,14 @@
                     return arr;
                 }
                 drawArr();
-
-                
                 document.body.onmousedown = function (event) {
                     var event = event || window.event;
                     var mousePos = getMousePos(event);
                     drawArr(mousePos.x, mousePos.y);
                 }
+
+
+
 
                 getMousePos = function (event) {
                     if (event.pageX || event.pageY) {

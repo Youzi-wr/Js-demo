@@ -1,3 +1,5 @@
+// https://mp.weixin.qq.com/s/klVQmjeWQipeoE3mDP2tGA
+
 Array.prototype.push1 = function (...rest) {
     this.splice(this.length, 0, ...rest)
     return this.length;

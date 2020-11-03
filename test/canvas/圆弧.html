@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <style>
+        #myCanvas {
+            border: 1px solid #9C9898;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas"
+            width="600"
+            height="300"></canvas>
+    <script>
+        function PI(deg) {
+            return deg / 180 * Math.PI;
+        }
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var pi = Math.PI;
+        context.beginPath();
+        context.arc(200, 200, 100, PI(-90), PI(0), false);
+        context.lineWidth = 10;
+        context.strokeStyle = 'black';
+        context.stroke();
+    </script>
+</body>
+
+</html>
