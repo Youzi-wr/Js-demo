@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas width="800"
+            height="600"></canvas>
+    <script>
+        var canvas = document.querySelector('canvas');
+        var ctx = canvas.getContext('2d');
+
+        // 添加图片
+        // https://aotu.io/notes/2017/05/25/canvas-img-rotate-and-flip/index.html
+        var imgX = 512;
+        var imgY = 220;
+        var imgWidth = 150;
+        var imgHeight = 63;
+
+        var image = new Image();
+        image.onload = function () {
+            ctx.drawImage(image, imgX, imgY, imgWidth, imgHeight);
+
+            // imgTranslateRotate()
+            imgScaleRotate()
+        }
+        image.src = "./2020.png";
+
+        // 图片平移加旋转: 先平移(width/2, height/2)，然后旋转，再平移(-width/2, -height/2)以达到以原点为中心旋转
+        function imgTranslateRotate() {
+            ctx.save()
+            ctx.clearRect(0, 0, canvas.width, canvas.height); //先清掉画布上的内容
+
+            // ctx.translate(imgX + imgWidth / 2, imgY + imgHeight / 2)
+            // ctx.rotate(30 * Math.PI / 180)
+            // 等于
+            var rad = 30 * Math.PI / 180
+            ctx.transform(Math.cos(rad), Math.sin(rad), -Math.sin(rad), Math.cos(rad), imgX + imgWidth / 2, imgY + imgHeight / 2) // <==旋转公式
+
+            ctx.drawImage(image, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight)
+            ctx.restore()
+        }
+
+        // 图片翻转加旋转: 先翻转，然后平移(-width/2, height/2)，然后旋转，再平移(-width/2, -height/2)以达到以原点为中心翻转加旋转
+        function imgScaleRotate() {
+            ctx.save();
+            ctx.clearRect(0, 0, canvas.width, canvas.height); //先清掉画布上的内容
+
+            // 翻转加旋转
+            // ctx.scale(-1, 1)
+            // ctx.translate(-imgX - imgWidth / 2, imgY + imgHeight / 2)
+            // ctx.rotate(-30 * Math.PI / 180)
+            // ctx.drawImage(image, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight)
+
+            // 翻转公式
+            var rad = 30 * Math.PI / 180
+            ctx.transform(-1, 0, 0, 1, imgX + imgWidth / 2, imgY + imgHeight / 2)
+            ctx.drawImage(image, -imgWidth / 2, -imgHeight / 2, imgWidth, imgHeight)
+
+            ctx.restore()
+
+            ctx.font = '14px #fff';
+            ctx.fillText('Hello，小贝同学', 0, 14)
+
+        }
+
+        // 图像旋转公式：
+        // ctx.save();
+        // var rad = angle * Math.PI / 180;
+        // ctx.transform(Math.cos(rad), Math.sin(rad), -Math.sin(rad), Math.cos(rad), x + width / 2, y + height / 2)
+        // ctx.drawImage(image, -width / 2, -height / 2, width, height)
+        // ctx.restore()
+
+        // 图像翻转公式；
+        // ctx.save();
+        // ctx.transform(-1, 0, 0, 1, 0, 0)
+        // ctx.drawImage(image, -width - x, y, width, height)
+        // ctx.restore()
+    </script>
+</body>
+
+</html>
