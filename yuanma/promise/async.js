@@ -90,6 +90,62 @@ console.log('srcipt end')   //宏1
 
 
 
+async function async1() {
+    console.log('async1 start'); //h1
+    await new Promise(resolve => {
+        console.log('promise1') //h1 注意，这里promise没有返回，所以后面w1，w2不执行
+    })
+    console.log('async1 success'); //w1
+    return 'async1 end'
+}
+console.log('srcipt start') //h1
+async1().then(res => console.log(res)) //w2:<resolve>: async1 end
+console.log('srcipt end') //h1
+
+
+
+async function async1() {
+    console.log('async1 start'); //h1
+    await new Promise(resolve => {
+        console.log('promise1') //h1
+        resolve('promise resolve') // <resolve>:promise resolve
+    })
+    console.log('async1 success'); //w1
+    return 'async1 end'
+}
+console.log('srcipt start') //h1
+async1().then(res => {
+    console.log(res) //w2:async1 end
+})
+new Promise(resolve => {
+    console.log('promise2') //h1
+    setTimeout(() => {
+        console.log('timer') //h2
+    })
+})
+
+
+async function async1() {
+    console.log("async1 start");//h1
+    await async2();
+    console.log("async1 end");//w1
+}
+async function async2() {
+    console.log("async2");//h1
+} 
+console.log("script start"); //h1
+setTimeout(function () {
+    console.log("setTimeout");//h2
+}, 0);
+async1();
+new Promise(function (resolve) {
+    console.log("promise1");//h1
+    resolve();
+}).then(function () {
+    console.log("promise2");//w1
+});
+console.log('script end')//h1
+
 // -------------------练习--------------------
 
 async function testSometing() {
