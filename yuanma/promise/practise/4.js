@@ -29,68 +29,69 @@ function loadImg(url) {
     });
 }
 
+
 // self----------------
-function limitLoad(urls, handle, limit) {
-    let sequence = [].concat(urls);
+// function limitLoad(urls, handle, limit) {
+//     let sequence = [].concat(urls);
 
-    // 处理limit长度的的promise
-    let promises = sequence.splice(0, limit).map((url, index) => {
-        return handle(url).then(() => {
-            return index;
-        })
-    })
-
-    // 处理剩下的promise
-    return sequence
-        .reduce((imagePromise, url) => {
-            return imagePromise
-                .then(() => {
-                    return Promise.race(promises)
-                        .then(finishIndex => {
-                            promises[finishIndex] = handle(url).then(() => {
-                                return finishIndex;
-                            })
-                        })
-                })
-        }, Promise.resolve()) //至此，sequence已经遍历完了，得到了一组还在加载的promise
-        .then(() => { // 最后三个用.all来调用
-            return Promise.all(promises);
-        });
-}
-
-// standard----------------
-// function limitLoad(urls, handler, limit) {
-//     let sequence = [].concat(urls); // 复制urls
-//     // 这一步是为了初始化 promises 这个"容器"
+//     // 处理limit长度的的promise
 //     let promises = sequence.splice(0, limit).map((url, index) => {
-//         return handler(url).then(() => {
-//             // 返回下标是为了知道数组中是哪一项最先完成
+//         return handle(url).then(() => {
 //             return index;
-//         });
-//     });
-//     // 注意这里要将整个变量过程返回，这样得到的就是一个Promise，可以在外面链式调用
+//         })
+//     })
+
+//     // 处理剩下的promise
 //     return sequence
-//         .reduce((pCollect, url) => {
-//             return pCollect
+//         .reduce((imagePromise, url) => {
+//             return imagePromise
 //                 .then(() => {
-//                     return Promise.race(promises); // 返回已经完成的下标
+//                     return Promise.race(promises)
+//                         .then(finishIndex => {
+//                             promises[finishIndex] = handle(url).then(() => {
+//                                 return finishIndex;
+//                             })
+//                         })
 //                 })
-//                 .then(fastestIndex => { // 获取到已经完成的下标
-//                     // 将"容器"内已经完成的那一项替换
-//                     promises[fastestIndex] = handler(url).then(
-//                         () => {
-//                             return fastestIndex; // 要继续将这个下标返回，以便下一次变量
-//                         }
-//                     );
-//                 })
-//                 .catch(err => {
-//                     console.error(err);
-//                 });
-//         }, Promise.resolve()) // 初始化传入
+//         }, Promise.resolve()) //至此，sequence已经遍历完了，得到了一组还在加载的promise
 //         .then(() => { // 最后三个用.all来调用
 //             return Promise.all(promises);
 //         });
 // }
+
+// standard----------------
+function limitLoad(urls, handler, limit) {
+    let sequence = [].concat(urls); // 复制urls
+    // 这一步是为了初始化 promises 这个"容器"
+    let promises = sequence.splice(0, limit).map((url, index) => {
+        return handler(url).then(() => {
+            // 返回下标是为了知道数组中是哪一项最先完成
+            return index;
+        });
+    });
+    // 注意这里要将整个变量过程返回，这样得到的就是一个Promise，可以在外面链式调用
+    return sequence
+        .reduce((pCollect, url) => {
+            return pCollect
+                .then(() => {
+                    return Promise.race(promises); // 返回已经完成的下标
+                })
+                .then(fastestIndex => { // 获取到已经完成的下标
+                    // 将"容器"内已经完成的那一项替换
+                    promises[fastestIndex] = handler(url).then(
+                        () => {
+                            return fastestIndex; // 要继续将这个下标返回，以便下一次变量
+                        }
+                    );
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        }, Promise.resolve()) // 初始化传入
+        .then(() => { // 最后三个用.all来调用
+            return Promise.all(promises);
+        });
+}
 
 
 limitLoad(urls, loadImg, 3)

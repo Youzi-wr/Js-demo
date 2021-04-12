@@ -72,3 +72,19 @@ console.log(a);
 console.log(b);
 
 
+
+// 标准写法
+function deepClone(arr) {
+    const res = arr.constructor == Array ? [] : {};
+    for (let i in arr) {
+        if (arr.hasOwnProperty(i)) {
+            if (arr[i] !== null && typeof arr == 'object') {
+                res[i] = deepClone(arr[i])
+            } else {
+                res[i] = arr[i]
+            }
+        }
+    }
+    return res;
+}
+

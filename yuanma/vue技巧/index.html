@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./index.js"></script>
+</body>
+<script>
+    var length = 1;
+    function fn() {
+        console.log(this.length)
+    }
+    const person = {
+        length: 2,
+        say(fn) {
+            fn();
+            arguments[0]();
+        }
+    }
+    person.say(fn, 1, 2);
+</script>
+
+</html>

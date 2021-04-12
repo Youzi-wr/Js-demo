@@ -9,6 +9,16 @@ function sayHello(to) {
     console.log(`${this.name} sayHello to ${to}`);
 }
 
+Function.prototype.myCall = function (context, ...arg) {
+    context = context || window;
+    let fn = Symbol();
+    context[fn] = this;
+    let fun = context[fn](...arg);
+    delete context[fn]
+
+    return fun
+}
+
 // //call
 // sayHello.call(jerry, 'Tom');
 
@@ -44,13 +54,13 @@ Function.prototype.myApply = function (context, arg) {
     return fun;
 }
 
-Function.prototype.myBind = function (context) { //[error]
+Function.prototype.myBind = function (context, ...arg1) { //[error]
     if (typeof context == undefined || context == null) {
         context = window;
     }
     const self = this;
     return function (...arg) {
-        return self.apply(context, arg)
+        return self.apply(context, [...arg1, ...arg])
     }
 }
 

@@ -21,3 +21,64 @@ function debounce(fn, delay = 50) {
         }, delay)
     }
 }
+
+// 二刷--------------------------------
+// 节流
+function throttle(fn, delay = 100) {
+    let start = Date.now();
+    let timer = null;
+    return function (...args) {
+        if (Date.now() - start < delay) {
+            clearTimeout(timer);
+
+            timer = setInterval(() => {
+                start = Date.now();
+                fn.apply(this, args)
+            }, delay)
+        } else {
+            start = Date.now();
+            fn.apply(this, args)
+        }
+    }
+}
+
+// 防抖
+function debounce(fn, delay = 100) {
+    let timer = null;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, args)
+        }, delay)
+    }
+}
+
+
+// 三刷--------------------------------
+function throttle(fn, delay) {
+    delay = delay || 200;
+    let start = Date.now();
+    let timer = null;
+
+    return function (...args) {
+        if (Date.now() - start < delay) {
+            clearTimeout(timer);
+            timer = setInterval(function () {
+                start = Date.now();
+                fn.apply(this, args)
+            }, delay)
+        } else {
+            start = Date.now();
+            fn.apply(this, args)
+        }
+    }
+}
+
+function debounce(fn, delay) {
+    delay = delay || 200;
+    return function (...args) {
+        setTimeout(function () {
+            fn.apply(this, args)
+        }, delay)
+    }
+}
