@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>DOM 的拖拽模型</title>
+</head>
+<style>
+    #draggable {
+        width: 200px;
+        height: 20px;
+        text-align: center;
+        background: white;
+    }
+
+    .dropzone {
+        width: 200px;
+        height: 20px;
+        background: blueviolet;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+</style>
+
+<body>
+    <div class="dropzone">
+        <div id="draggable"
+             draggable="true"
+             ondragstart="event.dataTransfer.setData('text/plain',null)">
+            This div is draggable
+        </div>
+    </div>
+    <div class="dropzone"></div>
+    <div class="dropzone"></div>
+    <div class="dropzone"></div>
+
+    <script>
+        // draggable 的元素可以触发 dragstart, drag 和 dragend 事件，此时 mousemove, mouseenter,mouseleave 等事件不再触发。
+        // dropzone 的元素可以响应 dragenter, dragleave, dragover 和 drop 事件
+        // drop 事件在 dragend 之前触发，必须在 dragover 中 preventDefault 否则无法触发 drop 事件
+        // 拖拽过程中离开浏览器会触发 dragleave，继续移动不会再触发 drag，释放时触发 dragend ，但是不触发 drop
+
+        var dragged;
+
+        /* draggable事件 */
+        document.addEventListener("drag", throttle(function (event) {
+            console.log(`%c [drag]: ${event.target}`, 'background: #222; color: #bada55')
+        }), false);
+
+        /* draggable事件 */
+        document.addEventListener("dragstart", function (event) {
+            console.log(`%c [dragstart]: ${event.target}`, 'background: #222; color: #bada55')
+
+            // 保存拖动元素的引用(ref.)
+            dragged = event.target;
+            // 使其半透明
+            event.target.style.opacity = .5;
+        }, false);
+
+        /* draggable事件 */
+        document.addEventListener("dragend", function (event) {
+            console.log(`%c [dragend]: ${event.target}`, 'background: #222; color: #bada55')
+
+            // 重置透明度
+            event.target.style.opacity = "";
+        }, false);
+
+
+
+        /* dropzone事件 */
+        document.addEventListener("dragover", function (event) {
+            console.log(`[dragover]: ${event.target}`)
+
+            // 阻止默认动作以启用drop
+            event.preventDefault();
+        }, false);
+
+        /* dropzone事件 */
+        document.addEventListener("dragenter", function (event) {
+            console.log(`[dragenter]: ${event.target}`)
+
+            // 当可拖动的元素进入可放置的目标时高亮目标节点
+            if (event.target.className == "dropzone") {
+                event.target.style.background = "purple";
+            }
+
+        }, false);
+
+        /* dropzone事件 */
+        document.addEventListener("dragleave", function (event) {
+            console.log(`[dragleave]: ${event.target}`)
+
+            // 当拖动元素离开可放置目标节点，重置其背景
+            if (event.target.className == "dropzone") {
+                event.target.style.background = "";
+            }
+
+        }, false);
+
+        /* dropzone事件 */
+        document.addEventListener("drop", function (event) {
+            console.log(`[drop]: ${event.target}`)
+
+            // 阻止默认动作（如打开一些元素的链接）
+            event.preventDefault();
+            // 将拖动的元素到所选择的放置目标节点中
+            if (event.target.className == "dropzone") {
+                event.target.style.background = "";
+                dragged.parentNode.removeChild(dragged);
+                event.target.appendChild(dragged);
+            }
+
+        }, false);
+
+        function throttle(fn, delay = 400) {
+            let timer;
+            let startTime = Date.now();
+            return function () {
+                let endTime = Date.now();
+                if (endTime - startTime < delay) {
+                    clearTimeout(timer)
+                    timer = setTimeout(() => {
+                        startTime = endTime;
+                        fn.call(this, ...arguments)
+                    }, delay)
+                } else {
+                    startTime = endTime;
+                    fn.call(this, ...arguments)
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
