@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #zoom_div {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        top: 0px;
+        left: 0px;
+        background-color: #000000;
+        -webkit-transform: translate3d(20px, 20px, 0) scale(1);
+        -webkit-transform-origin: 0 0;
+    }
+
+    #normal {
+        position: absolute;
+        left: 10px;
+        top: 150px;
+        width: 100px;
+        text-align: center;
+    }
+
+    #x2 {
+        position: absolute;
+        left: 130px;
+        top: 150px;
+    }
+
+    #result {
+        position: absolute;
+        padding: 10px;
+        left: 10px;
+        top: 200px
+    }
+
+    .btn {
+        float: left;
+        border: 1px solid black;
+        padding: 5px;
+        margin-top: 10px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        background: #000000;
+        color: #FFFFFF;
+    }
+
+    .clearfix {
+        clear: both;
+    }
+</style>
+
+<body>
+    <div id="normal"
+         class="btn">normal</div>
+    <div id="x2"
+         class="btn">x2</div>
+    <div id="result"></div>
+
+    <div class="clearfix"></div>
+
+    <div id="zoom_div"></div>
+
+    <script>
+        document.getElementById('x2').addEventListener("click", function (e) {
+            var transform = new WebKitCSSMatrix(window.getComputedStyle(document.getElementById('zoom_div')).webkitTransform);
+            var x = Math.floor(transform.e);
+            var y = Math.floor(transform.f);
+            console.log(`[x, y]: ${x}, ${y})
+            document.getElementById('zoom_div').setAttribute('style', 'transform: translate3d(' + x + "px," + y + 'px,0) scale(2)')
+
+        });
+
+        document.getElementById('normal').addEventListener("click", function (e) {
+            document.getElementById('zoom_div').setAttribute('style', 'transform: translate3d(0,0,0) scale(1)')
+        });
+
+        var offset = {}
+        var mdown = false;
+        var scale = 1;
+
+        document.getElementById('zoom_div').addEventListener("mousedown", function (e) {
+            var transformCss = window.getComputedStyle(document.getElementById('zoom_div')).webkitTransform;
+            var transform = new WebKitCSSMatrix(transformCss);
+            console.log(transformCss)
+            console.log(transform)
+
+            scale = transform.a;
+            console.log(`[scale]: ${scale}`);
+
+            var x = (e.offsetX != null) ? e.offsetX : e.originalEvent.layerX;
+            var y = (e.offsetY != null) ? e.offsetY : e.originalEvent.layerY;
+            console.log(`[x, y]: ${x}, ${y}`);
+            
+            offset = {
+                "x": x * scale,
+                "y": y * scale
+            }
+
+            mdown = true;
+        });
+
+
+        document.getElementById('zoom_div').addEventListener("mouseup", function () {
+            mdown = false;
+        });
+
+        document.addEventListener("mousemove", function (e) {
+            if (mdown == true) {
+                var div_x = e.pageX - offset.x;
+                var div_y = e.pageY - offset.y;
+
+                document.getElementById('result').innerHTML = div_x;
+                document.getElementById('zoom_div').setAttribute('style', ' -webkit-transform: translate3d(' + div_x + "px, " + div_y + 'px, 0) scale(' + scale + ')');
+            }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #experiment {
+        transform: scale(0.4);
+        transform-origin: right;
+    }
+</style>
+
+<body>
+    <div id="experiment"
+         style="border: 5px inset #AAA; background: #CCC; height: 400px; position: relative; overflow: auto;">
+        <div style="width: 900px; height: 2px;"></div>
+        <div style="height: 900px; width: 2px;"></div>
+    </div>
+    <script>
+        function click_handler(e) {
+            var rect = this.getBoundingClientRect();
+            // var left = e.clientX - rect.left - this.clientLeft + this.scrollLeft;
+            // var top = e.clientY - rect.top - this.clientTop + this.scrollTop;
+            var left = e.clientX - rect.left;
+            var top = e.clientY - rect.top;
+            console.log(`[clientX, clientY]: ${e.clientX}, ${e.clientY}`)
+            console.log(`[rect.left, rect.top]: ${rect.left}, ${rect.top}`)
+            console.log(`[this.clientLeft, this.clientTop]: ${this.clientLeft}, ${this.clientTop}`)
+            console.log(`[this.scrollLeft, this.scrollTop]: ${this.scrollLeft}, ${this.scrollTop}`)
+            console.log(`[left, top]: ${left}, ${top}`)
+            var dot = document.createElement('div');
+            // dot.setAttribute('style', 'position:absolute; width: 16px; height: 16px; border-radius: 100%; top: ' + top + 'px; left: ' + left + 'px; background: red;');
+
+            var transformCss = window.getComputedStyle(this).transform;
+            var matrix = new WebKitCSSMatrix(transformCss);
+            var scale = matrix.a;
+            // var x = Math.floor(matrix.e);
+            // var y = Math.floor(matrix.f);
+            // console.log(`[x, y]: ${x}, ${y}`)
+            // var x = e.offsetX || e.originalEvent.layerX;
+            // var y = e.offsetY || e.originalEvent.layerY;
+            var offset = {
+                "x": left / scale + this.scrollLeft - this.clientLeft,
+                "y": top / scale + this.scrollTop - this.clientTop
+            }
+            console.log(scale)
+            console.log(`[after-left, after-top]: ${offset.x}, ${offset.y}`)
+            // var div_x = left - offset.x;
+            // var div_y = top - offset.y;
+
+            // var dot1 = document.createElement('div');
+            dot.setAttribute('style', 'position:absolute; width: 16px; height: 16px; border-radius: 100%; top: ' + offset.y + 'px; left: ' + offset.x + 'px; background: red;');
+            this.appendChild(dot);
+            // this.appendChild(dot1);
+        }
+
+        document.getElementById("experiment").addEventListener('click', click_handler, false);
+    </script>
+</body>
+
+</html>
