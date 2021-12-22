@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="canvas"
+          width="540"
+          heihgt="180"></canvas>
+  <script type="text/javascript">
+    //画文字
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    ctx.font = "18px Georgia";
+    ctx.fillStyle = "#999";
+    ctx.fillText("我是模糊的文字", 50, 50);
+  </script>
+
+  <canvas id="my_canvas"
+          width="540"
+          heihgt="180"></canvas>
+  <script type="text/javascript">
+    // 获取像素比
+    var getPixelRatio = function (context) {
+      var backingStore = context.backingStorePixelRatio ||
+        context.webkitBackingStorePixelRatio ||
+        context.mozBackingStorePixelRatio ||
+        context.msBackingStorePixelRatio ||
+        context.oBackingStorePixelRatio ||
+        context.backingStorePixelRatio || 1;
+      return (window.devicePixelRatio || 1) / backingStore;
+    };
+    //画文字
+    var myCanvas = document.getElementById("my_canvas");
+    var context = myCanvas.getContext("2d");
+    var ratio = getPixelRatio(context);
+    debugger
+    myCanvas.style.width = myCanvas.width + 'px';
+    myCanvas.style.height = myCanvas.height + 'px';
+
+    myCanvas.width = myCanvas.width * ratio;
+    myCanvas.height = myCanvas.height * ratio;
+
+    // 放大倍数
+    context.scale(ratio, ratio);
+
+    context.font = "18px Georgia";
+    context.fillStyle = "#999";
+    context.fillText("我是清晰的文字", 50, 50);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const map = new Map()
+
+    // class Node {
+    //   constructor(name, cts) {
+    //     this.name = name
+    //     this.children = []
+    //     cts && cts.forEach(ct => this.children.push(ct))
+
+    //     // if (!Node.instance) {
+    //     //   Node.instance = this
+    //     // }
+    //     // return Node.instance
+    //   }
+    //   add(node) {
+    //     this.children.push(node)
+    //   }
+    // }
+
+    // const node4 = new Node('c4')
+    // const node3 = new Node('c3', [node4])
+    // const node2 = new Node('c2')
+    // const node1 = new Node('c1', [node2, node3])
+
+    // node1.children.splice(1, 1)
+    // node1.children.push(node3)
+    // console.log(node1)
+
+    // map.set(node1.name, node1)
+    // node1.children.push(node4)
+    // console.log(map)
+
+    // map.delete(node1.name)
+    // map.set(node1.name, node1)
+    // console.log(map)
+
+    const arr = [{
+      children: [],
+      name: 'c1'
+    }, {
+      children: [{
+        children: [{
+          children: [],
+          name: 'ct4'
+        }],
+        name: 'c2'
+      }, {
+        children: [],
+        name: 'c3'
+      }],
+      name: 'g1'
+    }]
+
+    // const ar = arr.reduce((sub, cl) => {
+    //   cl.children.length?
+    //   sub.push(cl.children)
+    //   return sub
+    // }, [])
+    // _getParentNodes(arr)
+
+    function _getParentNodes(calcu, node) {
+      node.some(_n => {
+        if (_n.children.length > 0) {
+          calcu.push(_n)
+          return _getParentNodes(calcu, children)
+        } else {
+          return calcu
+        }
+      })
+    }
+
+    // console.log(arr.flat(Infinity))
+    console.log(_getParentNodes([], arr))
+  </script>
+</body>
+
+</html>

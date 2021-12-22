@@ -1,0 +1,364 @@
+{
+  "legend": {
+    "itemGap": 8,
+    "show": false,
+    "data": ["货物1", "货物2", "货物3", "货物4", "货物5", "货物6"],
+    "textStyle": {
+      "fontFamily": "Microsoft Yahei",
+      "fontWeight": "normal",
+      "fontSize": 10,
+      "color": "rgba(255,255,255,0.5)"
+    },
+    "top": "bottom",
+    "left": "center"
+  },
+  "tooltip": {
+    "show": true,
+    "hideDelay": 100,
+    "trigger": { "action": "hover" },
+    "textStyle": {
+      "fontFamily": "Microsoft Yahei",
+      "fontWeight": "normal",
+      "fontSize": 14,
+      "color": "#fff"
+    }
+  },
+  "angleAxis": {
+    "type": "category",
+    "axisLine": { "lineStyle": { "width": 1, "color": "#fff" } }
+  },
+  "radiusAxis": {
+    "axisTick": { "show": false },
+    "axisLabel": { "show": false },
+    "axisLine": { "show": false },
+    "splitLine": { "show": false }
+  },
+  "polar": { "center": ["50%", "50%"], "radius": 140 },
+  "series": [
+    {
+      "name": "货物1",
+      "type": "pie",
+      "clockWise": false,
+      "radius": [60, 70],
+      "itemStyle": {
+        "normal": {
+          "label": { "show": true, "color": "#79daff", "fontSize": 18 },
+          "labelLine": { "length": 40, "length2": 40 }
+        }
+      },
+      "hoverAnimation": false,
+      "data": [
+        {
+          "value": 74,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        },
+        {
+          "value": 14,
+          "name": "货物1",
+          "label": {
+            "show": true,
+            "color": "#fff",
+            "fontSize": 15,
+            "formatter": "{d| {d}% }\n{b| {b} }",
+            "rich": {
+              "d": { "fontSize": 15, "color": "#fff" },
+              "b": { "fontSize": 18, "color": "#fff" }
+            }
+          }
+        },
+        {
+          "value": 0,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "货物2",
+      "type": "pie",
+      "clockWise": false,
+      "radius": [50, 67],
+      "itemStyle": {
+        "normal": {
+          "label": { "show": true, "color": "#2483ff", "fontSize": 18 },
+          "labelLine": { "length": 40, "length2": 40 }
+        }
+      },
+      "hoverAnimation": false,
+      "data": [
+        {
+          "value": 54,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        },
+        {
+          "value": 12,
+          "name": "货物2",
+          "label": {
+            "show": true,
+            "color": "#fff",
+            "fontSize": 15,
+            "formatter": "{d| {d}% }\n{b| {b} }",
+            "rich": {
+              "d": { "fontSize": 15, "color": "#fff" },
+              "b": { "fontSize": 18, "color": "#fff" }
+            }
+          }
+        },
+        {
+          "value": 10,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "货物3",
+      "type": "pie",
+      "clockWise": false,
+      "radius": [78, 81],
+      "itemStyle": {
+        "normal": {
+          "label": { "show": true, "color": "#aaeeff", "fontSize": 18 },
+          "labelLine": { "length": 40, "length2": 40 }
+        }
+      },
+      "hoverAnimation": false,
+      "data": [
+        {
+          "value": 44,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        },
+        {
+          "value": 18,
+          "name": "货物3",
+          "label": {
+            "show": true,
+            "color": "#fff",
+            "fontSize": 15,
+            "formatter": "{d| {d}% }\n{b| {b} }",
+            "rich": {
+              "d": { "fontSize": 15, "color": "#fff" },
+              "b": { "fontSize": 18, "color": "#fff" }
+            }
+          }
+        },
+        {
+          "value": 30,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "货物4",
+      "type": "pie",
+      "clockWise": false,
+      "radius": [73, 81],
+      "itemStyle": {
+        "normal": {
+          "label": { "show": true, "color": "#00b3ff", "fontSize": 18 },
+          "labelLine": { "length": 40, "length2": 40 }
+        }
+      },
+      "hoverAnimation": false,
+      "data": [
+        {
+          "value": 26,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        },
+        {
+          "value": 10,
+          "name": "货物4",
+          "label": {
+            "show": true,
+            "color": "#fff",
+            "fontSize": 15,
+            "formatter": "{d| {d}% }\n{b| {b} }",
+            "rich": {
+              "d": { "fontSize": 15, "color": "#fff" },
+              "b": { "fontSize": 18, "color": "#fff" }
+            }
+          }
+        },
+        {
+          "value": 40,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "货物5",
+      "type": "pie",
+      "clockWise": false,
+      "radius": [57.99999999999999, 67],
+      "itemStyle": {
+        "normal": {
+          "label": { "show": true, "color": "#57cdff", "fontSize": 18 },
+          "labelLine": { "length": 40, "length2": 40 }
+        }
+      },
+      "hoverAnimation": false,
+      "data": [
+        {
+          "value": 14,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        },
+        {
+          "value": 20,
+          "name": "货物5",
+          "label": {
+            "show": true,
+            "color": "#fff",
+            "fontSize": 15,
+            "formatter": "{d| {d}% }\n{b| {b} }",
+            "rich": {
+              "d": { "fontSize": 15, "color": "#fff" },
+              "b": { "fontSize": 18, "color": "#fff" }
+            }
+          }
+        },
+        {
+          "value": 58,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "货物6",
+      "type": "pie",
+      "clockWise": false,
+      "radius": [56.00000000000001, 83],
+      "itemStyle": {
+        "normal": {
+          "label": { "show": true, "color": "#0a73ff", "fontSize": 18 },
+          "labelLine": { "length": 40, "length2": 40 }
+        }
+      },
+      "hoverAnimation": false,
+      "data": [
+        {
+          "value": 0,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        },
+        {
+          "value": 10,
+          "name": "货物6",
+          "label": {
+            "show": true,
+            "color": "#fff",
+            "fontSize": 15,
+            "formatter": "{d| {d}% }\n{b| {b} }",
+            "rich": {
+              "d": { "fontSize": 15, "color": "#fff" },
+              "b": { "fontSize": 18, "color": "#fff" }
+            }
+          }
+        },
+        {
+          "value": 70,
+          "name": "",
+          "itemStyle": {
+            "normal": {
+              "color": "rgba(0,0,0,0)",
+              "label": { "show": false },
+              "labelLine": { "show": false }
+            },
+            "emphasis": { "color": "rgba(0,0,0,0)" }
+          }
+        }
+      ]
+    },
+    {
+      "type": "bar",
+      "data": [0],
+      "coordinateSystem": "polar",
+      "name": "06a",
+      "stack": "a"
+    }
+  ]
+}

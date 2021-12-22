@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style type="text/css">
+            #canvas1{
+                font-family: arial;
+            }
+            
+        </style>
+    </head>
+    <body>
+       　<h3>canvas画布：首先先设置一块区域，可以绘制文字或图形</h3>
+        <div style="border: 1px solid red; width:400px;height: 450px;">
+        <canvas id="huabu3" width="400px" height="450px" ></canvas>
+        </div>
+        <script type="text/javascript">
+            //找到画布的元素
+            var chiness = document.getElementById("huabu3");
+            //设置2维绘画的上下文
+            var chess = chiness.getContext("2d");
+            //绘画直线的上下文
+            var zhixian = chiness.getContext("2d");
+            //设置汉字的绘画上下文，因为如果跟chess混在一起显示不了文字
+            var hanzi = chiness.getContext("2d");
+            
+            chess.strokeStyle = "greenyellow";
+            zhixian.strokeStyle ="greenyellow";
+            //先画第一行的
+            chess.strokeRect(0,0,400,50);
+            chess.strokeRect(50,0,50,50);
+            chess.strokeRect(100,0,50,50);
+            chess.strokeRect(150,0,50,50);
+            chess.strokeRect(200,0,50,50);
+            chess.strokeRect(250,0,50,50);
+            chess.strokeRect(300,0,50,50);
+            chess.strokeRect(350,0,50,50);
+            
+            
+            
+            //第二行的
+            chess.strokeRect(0,50,50,50);
+            chess.strokeRect(50,50,50,50);
+            chess.strokeRect(100,50,50,50);
+            chess.strokeRect(150,50,50,50);
+            chess.strokeRect(200,50,50,50);
+            chess.strokeRect(250,50,50,50);
+            chess.strokeRect(300,50,50,50);
+            chess.strokeRect(350,50,50,50);
+            
+            
+            
+            //第三行
+            chess.strokeRect(0,100,50,50);
+            chess.strokeRect(50,100,50,50);
+            chess.strokeRect(100,100,50,50);
+            chess.strokeRect(150,100,50,50);
+            chess.strokeRect(200,100,50,50);
+            chess.strokeRect(250,100,50,50);
+            chess.strokeRect(300,100,50,50);
+            chess.strokeRect(350,100,50,50);
+            //第四行
+            chess.strokeRect(0,150,50,50);
+            chess.strokeRect(50,150,50,50);
+            chess.strokeRect(100,150,50,50);
+            chess.strokeRect(150,150,50,50);
+            chess.strokeRect(200,150,50,50);
+            chess.strokeRect(250,150,50,50);
+            chess.strokeRect(300,150,50,50);
+            chess.strokeRect(350,150,50,50);
+            
+            //第六行
+            chess.strokeRect(0,250,50,50);
+            chess.strokeRect(50,250,50,50);
+            chess.strokeRect(100,250,50,50);
+            chess.strokeRect(150,250,50,50);
+            chess.strokeRect(200,250,50,50);
+            chess.strokeRect(250,250,50,50);
+            chess.strokeRect(300,250,50,50);
+            chess.strokeRect(350,250,50,50);
+            
+            //第7行
+            chess.strokeRect(0,300,50,50);
+            chess.strokeRect(50,300,50,50);
+            chess.strokeRect(100,300,50,50);
+            chess.strokeRect(150,300,50,50);
+            chess.strokeRect(200,300,50,50);
+            chess.strokeRect(250,300,50,50);
+            chess.strokeRect(300,300,50,50);
+            chess.strokeRect(350,300,50,50);
+            
+            //第8行
+            chess.strokeRect(0,350,50,50);
+            chess.strokeRect(50,350,50,50);
+            chess.strokeRect(100,350,50,50);
+            chess.strokeRect(150,350,50,50);
+            chess.strokeRect(200,350,50,50);
+            chess.strokeRect(250,350,50,50);
+            chess.strokeRect(300,350,50,50);
+            chess.strokeRect(350,350,50,50);
+            //第9行
+            
+            chess.strokeRect(0,400,50,50);
+            chess.strokeRect(50,400,50,50);
+            chess.strokeRect(100,400,50,50);
+            chess.strokeRect(150,400,50,50);
+            chess.strokeRect(200,400,50,50);
+            chess.strokeRect(250,400,50,50);
+            chess.strokeRect(300,400,50,50);
+            chess.strokeRect(350,400,50,50);
+            
+            //这是线条布局，我觉得分开写好一点，不会乱
+            zhixian.moveTo(150,0);
+            zhixian.lineTo(250,100);
+            zhixian.stroke();
+            
+            zhixian.moveTo(250,0);
+            zhixian.lineTo(150,100);
+            zhixian.stroke();
+            
+            zhixian.moveTo(150,450);
+            zhixian.lineTo(250,350);
+            zhixian.stroke();
+            
+            zhixian.moveTo(250,450);
+            zhixian.lineTo(150,350);
+            zhixian.stroke();
+
+            //十字架线条的布局(由于做这个十字甲，根据坐标就可以简简单单的做出来了，没什么技巧性，所我做了一组。)
+            zhixian.moveTo(45,75);
+            zhixian.lineTo(45,95);
+            zhixian.lineTo(25,95);
+            zhixian.stroke();
+            
+            zhixian.moveTo(55,75);
+            zhixian.lineTo(55,95);
+            zhixian.lineTo(75,95);
+            zhixian.stroke();
+            
+            zhixian.moveTo(25,105);
+            zhixian.lineTo(45,105);
+            zhixian.lineTo(45,125);
+            zhixian.stroke();
+            
+            zhixian.moveTo(55,125);
+            zhixian.lineTo(55,105);
+            zhixian.lineTo(75,105);
+            zhixian.stroke();
+            //第五行，，文字那行那里我最后才写，，因为如果我把文字，插入到中间的行数来写，会发现下面的格子都不见了。
+            //建议创建文字的时候，先不急切的移动到自己想要的位置，
+            //文字的真实点是在字体的左下面 {.汉}，你可以
+            hanzi.font = '25px sans-serif';//字体大小也会影响的哦。
+            hanzi.fillStyle = "red";
+            
+            hanzi.translate(60,235);//其实这步是这重要的，定好中心点好，旋转起来就剪刀了
+            hanzi.rotate( 270* Math.PI/180);//我这步最后操作，等你中心点定好，移动到你自己想要的位置，再调角度
+            hanzi.fillText('汉',0,0);
+            hanzi.fillText('界',0,100);
+            hanzi.rotate( 180* Math.PI/180);
+            hanzi.fillText('楚',-25,-280);
+            hanzi.fillText('河',-25,-180);
+            hanzi.restore();
+            
+            //如还是 不懂的话，，可以复制我的代码，，自己改一下里面的数据，最好几十几十改，就会明白其中的道理。
+            
+        </script>
+    </body>
+</html>

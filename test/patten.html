@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const isNumber = v => (/^[-]?[\.\d]+$/.test(v) ? Number(v) : null),
+          isPositiveNumber = v => (/^[\.\d]+$/.test(v) ? Number(v) : null),
+          linkParam = (v, is, get) => {
+            const patten = new RegExp(`^(0|[1-9][0-9]*)(\.\d+)?(${get})$`)
+            // console.log(patten)
+            console.log(is(v) !== null ? `${v}${get}` : patten.test(v) ? v : '')
+          }
+
+    linkParam(12, isNumber, 'px')
+    linkParam('12px', isNumber, 'px')
+    linkParam('12pxw', isNumber, 'px')
+
+
+    const getPx = v => (/px|%/.test(v) ? v : `${v}px`),
+    getDeg = v => (/deg/.test(v) ? v : `${v}deg`),
+    getUrl = v => (/url/.test(v) ? v : `url(${v})`),
+    isArray = v => isType(v, 'Array'),
+    join = (arr, sign) => arr.join(sign),
+    replace = (v, fn) =>
+      isArray(v) ? v.filter(i => isDef(i)).map(_v => fn(_v)) : fn(v),
+    isNumber = v => (/^[-]?[\.\d]+$/.test(v) ? Number(v) : null),
+    isPositiveNumber = v => (/^[\.\d]+$/.test(v) ? Number(v) : null),
+    linkParam = (v, is, unit) => {
+      // const [_n, _u] = v.toString().split(unit)
+      // const res = is(_n) !== null && _u === undefined ? `${_n}${unit}` : ''
+      // return res
+      is(v) !== null ? `${v}px` : 
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>ramda</title>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.26.0/ramda.min.js"></script>
+</head>
+
+<body>
+  <script>
+    function curry(fn) {
+      return function curried(...args) {
+        if (args.length >= fn.length) {
+          return fn.apply(this, args)
+        } else {
+          return function (...args2) {
+            return curried.apply(this, args.concat(args2))
+          }
+        }
+      }
+    }
+
+    function isNumber(v) {
+      return typeof v === 'number' && !isNaN(v)
+    }
+
+    function isType(obj, type) {
+      return Object.prototype.toString.call(obj).includes(type)
+    }
+
+    function isDef(v) {
+      return v !== undefined && v !== null
+    }
+
+    // const hasPx = (reg, v) => reg.test(v) 
+    // const px = v => `${v}px`
+
+
+    const getPx = v => (/px|%/.test(v) ? v : `${v}px`),
+      getDeg = v => (/deg/.test(v) ? v : `${v}deg`),
+      getUrl = v => (/url/.test(v) ? v : `url(${v})`),
+      isArray = v => isType(v, 'Array'),
+      isNumberNaN = v => !Number.isNaN(Number(v)),
+      join = (arr, sign) => arr.join(sign),
+      replace = (v, fn) =>
+        isArray(v) ? v.filter(i => isDef(i)).map(_v => fn(_v)) : fn(v)
+
+    const backgroundImage = v => getUrl(v)
+    const width = v => (isNumberNaN(v) ? getPx(v) : v)
+    const height = v => (isNumberNaN(v) ? getPx(v) : v)
+    const margin = v => (isArray(v) ? join(replace(v, getPx), ' ') : v)
+    const padding = v => (isArray(v) ? join(replace(v, getPx), ' ') : v)
+    const tops = v => (isNumber(v) ? getPx(v) : v)
+    const left = v => (isNumber(v) ? getPx(v) : v)
+    const right = v => (isNumber(v) ? getPx(v) : v)
+    const bottom = v => (isNumber(v) ? getPx(v) : v)
+
+    // 10  => 10px
+    // [10, 10, 20, 20]  =>  10px 10px 20px 20px
+
+    // -----------------------------------------
+    const isNumber = v => typeof v === 'number' && !isNaN(v)
+    const isArray = v => isType(v, 'Array')
+
+    // const array = v => isArray(v) ? v : [v]
+    const join = (arr, o) => join(arr, o)
+    const replace = (arr, unit) => arr.map(i => `${i}${unit}`)
+
+    const hasPx = v => /px|%/.test(v)
+
+    var compose = function (f, g) {
+      return function (x) {
+        return f(g(x));
+      };
+    };
+
+    compose(join, replace, isArray)
+
+
+    console.log(margin([10, '', 20, 20]))
+
+
+  </script>
+</body>
+
+</html>

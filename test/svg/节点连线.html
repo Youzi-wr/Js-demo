@@ -1,0 +1,85 @@
+<html>
+
+<body>
+  <svg id="svg"
+       width='100%'
+       height='100%'
+       style="background-color: #f5f5df">
+  </svg>
+</body>
+<script type="text/javascript">
+  var startX = 0;
+  var startY = 0;
+  var drawable = false;
+  document.addEventListener('mousedown', function (event) {
+    startX = event.clientX;
+    startY = event.clientY;
+    drawable = true;
+  });
+  document.addEventListener('mouseup', function (event) {
+    drawable = false;
+  })
+  document.addEventListener('mousemove', function (event) {
+    if (drawable) {
+      let x1 = startX;
+      let y1 = startY;
+      let level = -270;
+      let c1x = x1 + level;
+      let c1y = y1;
+      let c2x = event.clientX - level;
+      let c2y = event.clientY;
+      let path = '<path d=\'M ' + x1 + ' ' + y1 + 'C ' + c1x + ' ' + c1y + ' ' + c2x + ' ' + c2y + ' ' + event.clientX + ' ' + event.clientY + '\' style="stroke-width:3;stroke: purple;fill:none"></path>'
+      // let p1 = '<path d="M ' + x1 + ' ' + y1 + ' L' + ' ' + (c1x - 3) + ' ' + c1y + '" style="stroke-width: 3;stroke: red;stroke-dasharray: 2 1;"></path>';
+      // let p2 = '<path d="M ' + event.clientX + ' ' + event.clientY + ' L' + ' ' + (c2x - 3) + ' ' + c2y + '" style="stroke-width: 3;stroke: red;stroke-dasharray: 2 1;"></path>';
+      // let c1 = '<circle cx="' + c1x + '" cy="' + c1y + '" r="5" stroke="red" stroke-width="2" fill="red" stroke-dasharray: 2 1;/>';
+      // let c2 = '<circle cx="' + c2x + '" cy="' + c2y + '" r="5" stroke="red" stroke-width="2" fill="red" stroke-dasharray: 2 1;/>';
+      // let p3 = path + p1 + p2 + c1 + c2;
+      document.getElementById("svg").innerHTML = path;
+    }
+  })
+
+  // svgPathCurv({x:10,y:10}, {x:30,y:30}, 2)
+  function svgPathCurv(a, b, curv) {
+    /*
+     * 弯曲函数.
+     * a:a点的坐标{x:10,y:10}
+     * b:b点的坐标{x:10,y:20}
+     * curv:弯曲程度 取值 -5 到 5 
+     */
+    curv = curv ? curv : 0;
+    var x1, x2, y1, y2, s, k2, controX, controY, q, l, path = '';
+    var s = 'M' + a.x + ',' + a.y + ' ';
+
+    /*
+     * 控制点必须在line的中垂线上
+     * **求出k2的中垂线(中垂线公式)**
+     */
+    k2 = -(x2 - x1) / (y2 - y1);
+    /*
+     * 弯曲程度是根据中垂线斜率决定固定控制点的X坐标或者Y坐标,通过中垂线公式求出另一个坐标
+     * 默认A/B中点的坐标+curv*30,可以通过改基数30改变传入的参数范围
+     */
+    if (k2 < 2 && k2 > -2) {
+      controX = (x2 + x1) / 2 + curv * 30;
+      controX = controX < 0 ? -controX : controX;
+      controY = k2 * (controX - (x1 + x2) / 2) + (y1 + y2) / 2;
+      controY = controY < 0 ? -controY : controY;
+    } else {
+      controY = (y2 + y1) / 2 + curv * 30;
+      controY = controY < 0 ? -controY : controY;
+      controX = (controY - (y1 + y2) / 2) / k2 + (x1 + x2) / 2;
+      controX = controX < 0 ? -controX : controX;
+    }
+    //定义控制点的位置
+
+    q = 'Q' + controX + ',' + controY + ' ';
+    //l=lineto
+    l = x2 + ',' + y2 + ' ';
+    //结果例: M10,10Q35,15,10,20 
+    path = s + q + l;
+    console.log(path)
+    return path;
+  }
+</script>
+
+</html>
