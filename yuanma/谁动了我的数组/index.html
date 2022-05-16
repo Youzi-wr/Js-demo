@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var a = Object.create(Array.prototype, {});
+    a.push(1);
+    a.push(2);
+
+    console.log(Array.isArray(a)); // false
+    console.log(a instanceof Array); // true
+    console.log(Object.prototype.toString.call(a) == '[object Array]')
+
+    // 当在不同的上下文中访问对象时，instanceOf 将无法识别当前上下文中对象的原型链
+  </script>
+
+  <script>
+    var arr = [];
+    Object.setPrototypeOf(arr, null);
+
+    console.log(Array.isArray(arr));   // true
+    console.log(arr instanceof Array); // false
+    console.log(Object.prototype.toString.call(a) == '[object Array]')
+
+    // Array.isArray 比使用 instanceof 检查的优势在于，即使数组的原型已更改，它仍会返回 true，如果将非数组原型更改为 Array 原型，它将返回 false
+  </script>
+</body>
+
+</html>

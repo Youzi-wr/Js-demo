@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>ccccccccc</div>
+  <!-- <iframe src="http://localhost:8080/nanshan/editor/da3122f8809248b882213c5c52e54cde" width="1000px" height="500px" frameborder="0"></iframe> -->
+  <!-- <script>
+    window.open('http://localhost:8080/nanshan/editor/da3122f8809248b882213c5c52e54cde')
+  </script> -->
+  <script>
+    // setTimeout(()=>{
+    //   window.open('http://localhost:8080/nanshan/editor/da3122f8809248b882213c5c52e54cde')
+    // },20000)
+    const iframe = document.createElement('iframe')
+    iframe.width = '1000px'
+    iframe.height = '500px'
+    iframe.src = 'http://localhost:8080/nanshan/editor/da3122f8809248b882213c5c52e54cde'
+    document.body.appendChild(iframe)
+  </script>
+</body>
+</html>

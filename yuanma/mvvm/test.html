@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible"
+        content="IE=edge">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Uix {
+      constructor(state) {
+        Object.keys(state).forEach(key => {
+          this.defineReactive(state, key)
+        })
+      }
+      defineReactive(data, key) {
+        const dep = new Dept()
+        Object.defineProperty(data, key, {
+          configurable: true,
+          get() {
+            if (Dept.target) {
+              dep.addWatcher(Dept.target)
+            }
+            return val
+          },
+          set(newVal) {
+            if (val !== newVal) {
+              val = newVal
+              dep.notify(newVal)
+            }
+          }
+        })
+      }
+    }
+
+    // observer(vm)
+    // new Compile(vm)
+
+    // new Watcher(this.vm, exp, function (value) {
+    //   console.log(value)
+    // })
+
+    class Watcher {
+      constructor(m, exp, fun) {
+        this.vm = vm.data
+        this.exp = exp
+        this.fun = fun
+        this.init()
+      }
+
+      update(value) {
+        this.fun(value)
+      }
+
+      init() {
+        Dept.target = this
+        this.fun(this.vm[this.exp])
+        Dept.target = null
+      }
+    }
+
+    class Dept {
+      target = null
+
+      constructor() {
+        this.subs = []
+      }
+
+      addWatcher(dep) {
+        this.subs.push(dep)
+      }
+
+      notify(value) {
+        this.subs.forEach(sub => {
+          sub.update(value)
+        })
+      }
+    }
+
+
+    new Uix({
+      canRun: true
+    })
+
+
+  </script>
+</body>
+
+</html>

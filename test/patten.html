@@ -8,34 +8,26 @@
 </head>
 <body>
   <script>
-    const isNumber = v => (/^[-]?[\.\d]+$/.test(v) ? Number(v) : null),
-          isPositiveNumber = v => (/^[\.\d]+$/.test(v) ? Number(v) : null),
-          linkParam = (v, is, get) => {
-            const patten = new RegExp(`^(0|[1-9][0-9]*)(\.\d+)?(${get})$`)
-            // console.log(patten)
-            console.log(is(v) !== null ? `${v}${get}` : patten.test(v) ? v : '')
-          }
-
-    linkParam(12, isNumber, 'px')
-    linkParam('12px', isNumber, 'px')
-    linkParam('12pxw', isNumber, 'px')
-
-
-    const getPx = v => (/px|%/.test(v) ? v : `${v}px`),
-    getDeg = v => (/deg/.test(v) ? v : `${v}deg`),
-    getUrl = v => (/url/.test(v) ? v : `url(${v})`),
-    isArray = v => isType(v, 'Array'),
-    join = (arr, sign) => arr.join(sign),
-    replace = (v, fn) =>
-      isArray(v) ? v.filter(i => isDef(i)).map(_v => fn(_v)) : fn(v),
-    isNumber = v => (/^[-]?[\.\d]+$/.test(v) ? Number(v) : null),
-    isPositiveNumber = v => (/^[\.\d]+$/.test(v) ? Number(v) : null),
-    linkParam = (v, is, unit) => {
-      // const [_n, _u] = v.toString().split(unit)
-      // const res = is(_n) !== null && _u === undefined ? `${_n}${unit}` : ''
-      // return res
-      is(v) !== null ? `${v}px` : 
-    }
+    const str = `ReferenceError: seriesColor is not defined
+    at item.transformOptions (http://localhost:8080/s-static/component-source/6ddcaececa7c446886931370fbe953eesrc.js:317:24)
+    at item.transform (http://localhost:8080/spray/compile:1:2532)
+    at item.l.hasOwnProperty.l.transform (http://localhost:8080/spray/compile:1:8521)
+    at item.render (http://localhost:8080/spray/compile:1:1223)
+    at item.l._update (http://localhost:8080/spray/compile:1:7706)
+    at http://localhost:8080/spray/compile:1:7915
+    at http://localhost:8080/spray/compile:1:7464
+    at Array.forEach (<anonymous>)
+    at item.l.__initComp (http://localhost:8080/spray/compile:1:7452)`
+     
+    const reg = /\(http:.*:\d{1,}:\d{1,}\)/g
+    str.replace(reg, function (_match) {
+      debugger
+        const [line, column] = _match.match(
+          /(?<=js:)\d{1,}|(?<=js:\d{1,}:)\d{1,}/g
+        )
+        return `<a data-line='${line}' data-column='${column}'>${line}行，${column}列</a>`
+      })
+      console.log(str)
   </script>
 </body>
 </html>

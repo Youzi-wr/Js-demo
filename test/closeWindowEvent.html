@@ -38,7 +38,7 @@
     }
     window.onbeforeunload = function (event) {
         _beforeUnload_time = new Date().getTime();
-        event.returnValue = "确定离开？";
+        // event.returnValue = "确定离开？";
 
         if (is_fireFox) {//火狐关闭执行
             var log = localStorage.getItem('log')
