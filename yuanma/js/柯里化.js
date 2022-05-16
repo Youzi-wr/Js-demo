@@ -23,44 +23,44 @@
 // console.log(count(100)(200)());
 
 
-// // -------------------------
-// function curry1(fn) {
-//     if (fn.length <= 1) return fn;
-//     const generator = (...args) => {
-//         if (fn.length === args.length) {
-//             return fn(...args)
-//         } else {
-//             return (...args2) => {
-//                 return generator(...args, ...args2)
-//             }
-//         }
-//     }
-//     return generator
-// }
+// -------------------------
+function curry1(fn) {
+    if (fn.length <= 1) return fn;
+    const generator = (...args) => {
+        if (fn.length === args.length) {
+            return fn(...args)
+        } else {
+            return (...args2) => {
+                return generator(...args, ...args2)
+            }
+        }
+    }
+    return generator
+}
 
-// // --------------------------
-// function curry(func) {
-//     return function curried(...args) {
-//         if (args.length >= func.length) { // 通过函数的length属性，来获取函数的形参个数
-//             return func.apply(this, args);
-//         } else {
-//             return function (...args2) {
-//                 return curried.apply(this, args.concat(args2));
-//             };
-//         }
-//     }
-// }
+// --------------------------
+function curry(func) {
+    return function curried(...args) {
+        if (args.length >= func.length) { // 通过函数的length属性，来获取函数的形参个数
+            return func.apply(this, args);
+        } else {
+            return function (...args2) {
+                return curried.apply(this, args.concat(args2));
+            };
+        }
+    }
+}
 
-// function bar(a, b, c) {
-//     return a + b + c;
-// }
-// // 把函数传进去就可以了
-// var f = curry(bar)
+function bar(a, b, c) {
+    return a + b + c;
+}
+// 把函数传进去就可以了
+var f = curry(bar)
 
-// console.log(f(1)(2)(3));
-// console.log(f(1)(2, 3));
-// console.log(f(1, 2)(3));
-// console.log(f(1, 2, 3, 4));
+console.log(f(1)(2)(3));
+console.log(f(1)(2, 3));
+console.log(f(1, 2)(3));
+console.log(f(1, 2, 3, 4));
 
 
 
@@ -76,10 +76,3 @@ function curry(fn) {
         }
     }
 }
-
-const add = function (a, b, c) {
-  return a + b + c;
-};
-
-const curried = curry(add);
-const plusOne = curried(1)(2)(3);

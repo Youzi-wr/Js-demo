@@ -16,6 +16,3 @@ Watcher.prototype = {
         Dept.target = null;
     }
 }
-
-this.vm.data.title
-this.vm.title
