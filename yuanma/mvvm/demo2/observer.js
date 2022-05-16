@@ -23,7 +23,7 @@ function observer(vm) {
     let data = vm.data;
     Object.keys(data).forEach(key => {
         let val = data[key];
-        if (typeof val == 'object') observer(val);
+        if (typeof val == 'object') observer(val);0
 
         defineReactive(data, key, val);
         proxyReactive(vm, key);

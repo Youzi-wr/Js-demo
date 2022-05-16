@@ -2,77 +2,48 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 
 <body>
 
 </body>
 <script>
-  // var arr = [{
-  //     autId: '0-0',
-  //     children: [{
-  //         autId: '0-0-0'
-  //     }, {
-  //         autId: '0-0-1'
-  //     }]
-  // }, {
-  //     autId: '0-1',
-  //     children: [{
-  //         autId: '0-1-0'
-  //     }]
-  // }, {
-  //     autId: '0-2',
-  // }];
+    var arr = [{
+        autId: '0-0',
+        children: [{
+            autId: '0-0-0'
+        }, {
+            autId: '0-0-1'
+        }]
+    }, {
+        autId: '0-1',
+        children: [{
+            autId: '0-1-0'
+        }]
+    }, {
+        autId: '0-2',
+    }];
 
-  // function reverChild(children) {
-  //     return children.reduce(function (child, item) {
-  //         if (item.children) {
-  //             item.children = reverChild(item.children)
-  //         }
-  //         if (!item["autId"] || authSet.indexOf(item["autId"]) != -1) {
-  //             child.push(item);
-  //         }
-  //         return child;
-  //     }, [])
-  // }
-
-  // var authSet = ['0-0', '0-0-1', '0-1', '0-1-0'];
-
-  // var arr2 = reverChild(arr);
-
-  // console.log(arr2)
-
-  const aa = [{
-    "x": 7.801,
-    "y": 0.581,
-    "s": "cos"
-  },
-  {
-    "x": 2.775,
-    "y": -0.944,
-    "s": "cos"
-  },
-  {
-    "x": 0.265,
-    "y": 0.971,
-    "s": "sin"
-  }]
-
-  const b = aa.reduce((acc, i) => {
-    if (i.s === 'sin') {
-      acc[0].push([i.x, i.y])
+    function reverChild(children) {
+        return children.reduce(function (child, item) {
+            if (item.children) {
+                item.children = reverChild(item.children)
+            }
+            if (!item["autId"] || authSet.indexOf(item["autId"]) != -1) {
+                child.push(item);
+            }
+            return child;
+        }, [])
     }
-    if (i.s === 'cos') {
-      acc[1].push([i.x, i.y])
-    }
-    return acc
-  }, [[],[]])
 
-  console.log(b)
+    var authSet = ['0-0', '0-0-1', '0-1', '0-1-0'];
+
+    var arr2 = reverChild(arr);
+
+    console.log(arr2)
 </script>
 
 </html>
