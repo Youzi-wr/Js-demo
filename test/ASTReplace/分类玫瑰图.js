@@ -242,7 +242,7 @@ class item extends Base {
               "timeFormat": "{MM}/{dd}",
               "valueFormat": "d",
               "display": {
-                "tickCount": 7, 
+                "tickCount": 8, 
                 "prefix": "",
                 "suffix": "",
                 "rotate": 0,
