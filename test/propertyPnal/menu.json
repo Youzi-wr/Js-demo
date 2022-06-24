@@ -1,0 +1,81 @@
+{
+  "vertical": {
+    "type": "menu",
+    "children": {
+      "general": {
+        "name": "通用",
+        "mode": "single",
+        "children": {
+          "initValue": {
+            "name": "初始化值",
+            "type": "text",
+            "default": 1,
+            "description": "请填入期望初始化选中的标签ID"
+          },
+          "queueMode": {
+            "name": "排列方式",
+            "type": "radio",
+            "options": [
+              {
+                "label": "水平方向",
+                "value": "hori"
+              },
+              {
+                "label": "垂直方向",
+                "value": "verti"
+              }
+            ],
+            "default": "hori"
+          },
+          "alignment": {
+            "name": "对齐方式",
+            "type": "radio",
+            "options": [
+              {
+                "label": "左对齐",
+                "value": "flex-start"
+              },
+              {
+                "label": "居中对齐",
+                "value": "center"
+              },
+              {
+                "label": "右对齐",
+                "value": "flex-end"
+              }
+            ],
+            "default": "center"
+          }
+        }
+      },
+      "graph": {
+        "name": "图形",
+        // "type"(有效)
+        "mode": "multiple",
+        "children": {
+          "x": {
+            "name": "x轴",
+            // type（无效）
+            "children": {
+              "text": {
+                "type": "text",
+                "name": "输入框",
+                "default": "123"
+              }
+            }
+          },
+          "y": {
+            "name": "y轴",
+            "children": {
+              "number": {
+                "type": "number",
+                "name": "位置",
+                "default": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
