@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parent Frame</title>
+    <script>
+      window.addEventListener('beforeunload', function(event) {
+        console.log('I am the 1st one.');
+      });
+      window.addEventListener('unload', function(event) {
+        console.log('I am the 3rd one.');
+      });
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- <iframe src="child.html"></iframe> -->
+    
+    <script>
+      const _iframe = document.createElement('iframe')
+      _iframe.width = '100%'
+      _iframe.height = '100%'
+      _iframe.name = 'iframe'
+      _iframe.setAttribute('frameborder', 0)
+      _iframe.src = 'child.html'
+
+      document.getElementById('app').appendChild(_iframe)
+    </script>
+  </body>
+</html>

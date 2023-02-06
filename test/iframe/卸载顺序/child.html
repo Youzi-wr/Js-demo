@@ -1,0 +1,20 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Child Frame</title>
+    <script>
+      setTimeout(()=>{
+        window.addEventListener('beforeunload', function(event) {
+          console.log('I am the 2nd one.', window.name);
+        });
+        window.addEventListener('unload', function(event) {
+          console.log('I am the 4th and last one…');
+        });
+      },100)
+    </script>
+  </head>
+  <body>
+      ☻
+  </body>
+</html>
