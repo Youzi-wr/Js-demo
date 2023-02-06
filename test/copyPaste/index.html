@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./upload.js"></script>
+  <style>
+    #drop img {
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+    }
+  </style>
+  <script src="./upload.js"></script>
+  <script src="./uploads.js"></script>
+</head>
+
+<body onload="test()">
+  <div id="drop"
+       style="width: 500px;height: 400px;background: #eee;margin: 0 auto;">
+    <div style="clear: both;"></div>
+  </div>
+  <p style="text-align: center"><button onclick="up()">提交</button></p>
+  <script>
+    var formData = new FormData(), 
+    list = {}
+
+    function test() {
+      var d = new CopyPaste()
+      d.getDragImage({
+        id: 'drop',
+        callback: function (data) {
+          if (list[data.name]) return;
+          list[data.name] = true
+          formData.append("files", data.blob);
+          document.getElementById('drop').appendChild(data.img)
+          /*
+          * 返回img对象，url ,blob对象
+          * */
+        }
+      })
+    }
+    function up() {
+      console.log(formData)
+      /*
+      * formData  这个对象即我们要传的值
+      * 通过 异步post/get 给后台即可
+      * */
+    }
+
+    // var formData = new FormData(), list = {}
+    // function test() {
+    //   var d = new DragUpLoads()
+    //   d.getDragImage({
+    //     id: 'drop',
+    //     dropCallback: function (data) {
+    //       if (list[data.name]) return;
+    //       list[data.name] = true
+    //       formData.append("files", data.blob);
+    //       formData.append("asdfas", 'asdfasdf');
+    //       document.getElementById('drop').appendChild(data.img)
+    //       /*
+    //       * 返回img对象，url ,blob对象
+    //       * */
+    //     }
+    //   })
+    // }
+    // function up() {
+    //   console.log(formData)
+    //   /*
+    //   * formData  这个对象即我们要传的值
+    //   * 通过 异步post/get 给后台即可
+    //   * */
+    // }
+
+
+    // var div = document.querySelector('div');
+
+    // div.addEventListener("dragenter", function (e) {  //拖进
+    //   e.preventDefault();
+    // })
+    // div.addEventListener("dragover", function (e) {  //拖来拖去
+    //   e.preventDefault();
+    // })
+    // div.addEventListener('drop', function (event) {
+    //   event.preventDefault();
+    //   // 将类数组对象 转换成数组
+    //   // var fileList = Array.from(event.dataTransfer.files);  //  es6 格式
+    //   var fileList = [].slice.call(event.dataTransfer.files);  // es5 格式
+    //   console.log(fileList)
+    // })
+  </script>
+</body>
+
+</html>
