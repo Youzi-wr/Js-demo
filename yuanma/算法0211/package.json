@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dfs": "node 二叉树.js",
+    "deep": "node 二叉树最大深度.js",
+    "perfect": "node 对称二叉树.js"
+  },
+  "type": "module"
+}

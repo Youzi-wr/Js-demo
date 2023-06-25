@@ -37,7 +37,7 @@ function bubbleSort(arr) {
 var arr = [34, 4, 56, 67, 3, 2, 56, 6, 34, 57];
 bubbleSort(arr)
 
-
+// https://github.com/biaochenxuying/blog/issues/39
 
 // 直接插入排序
 function bubbleSort(arr) {

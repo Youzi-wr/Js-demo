@@ -1,1 +1,1 @@
-module.exports = require('./simple.js')
+module.exports = require('./promise.js')
