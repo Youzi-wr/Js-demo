@@ -19,13 +19,12 @@ console.log(obj3.id); // 1
 
 // ----------------------------------
 
-function new2(func) {
+function new2(func, ...args) {
     // 创建了一个实例对象 o，并且这个对象__proto__指向func这个类的原型对象 
     let o = Object.create(func.prototype);
-    // (在构造函数中this指向当前实例)让这个类作为普通函数值行 并且里面this为实例对象 
-    let k = func.call(o);
-    // 最后再将实例对象返回 如果你在类中显示指定返回值k，
-    // 注意如果返回的是引用类型则将默认返回的实例对象o替代掉
+    // 将构造函数的this指向新对象o并执行函数代码
+    let k = func.call(o, ...args);
+    // 如果构造函数中没有人为返回一个对象类型的值，则返回这个新对象o。否则直 接返回那个对象类型值。（一般定义的构造函数中不写返回值。）
     return typeof k === 'object' ? k : o;
 }
 

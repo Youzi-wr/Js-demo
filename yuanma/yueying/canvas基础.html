@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <script>
+    // https://juejin.cn/post/7244077531607089211?utm_source=gold_browser_extension
+
+    const canvas = document.getElementById('canvas')
+
+    // --------- 基础概念 --------------
+    // const ctx = canvas.getContext('2d')
+
+    // ctx.moveTo(0, 0) // 构思
+    // ctx.lineTo(150, 150) // 构思
+
+    // ctx.stroke() // 动笔
+
+    // ctx.strokeStyle = 'blue' // 设置画笔的颜色或者样式
+
+    // // 效果一
+    // ctx.lineTo(300, 300) // 从(150, 150)与(300, 300)之间“构思”一条线
+    // ctx.stroke() // 0到300都变成了蓝色
+
+    // // 效果二
+    // ctx.beginPath() // 开启一个新的路径
+    // ctx.moveTo(200, 0) // 因为beginPath清空了之前的画布信息，所以要先调用moveTo找到落点
+    // ctx.lineTo(200, 300);
+    // ctx.lineTo(150, 150); 
+    // ctx.closePath(); // closePath即让当前的构思线条起点与终点相连，形成闭合区域
+    // ctx.stroke(); // 绘制出一个封闭的三角形
+
+
+
+    // --------- 基础图形 -----------
+    /**
+     *  例一：绘制半圆
+     *  arc(x, y, radius, startAngle, endAngle, anticlockwise) 画一个以（x,y）为圆心的以radius为半径的圆弧（圆），从startAngle开始到endAngle结束，按照anticlockwise给定的方向（默认为顺时针）来生成。
+     ** /
+    // const ctx = canvas.getContext('2d')
+    // // 绘制半圆
+    // ctx.arc(100, 100, 50, 0, Math.PI, true)
+    // ctx.fillStyle = 'red'
+    // // 填充
+    // ctx.fill()
+    
+
+
+    /**
+     *  例二：arcTo的使用
+     *  arcTo(x1, y1, x2, y2, radius) 根据给定的控制点和半径画一段圆弧，再以直线连接两个控制点
+     **/
+    // const ctx = canvas.getContext('2d')
+    // // 指定绘制路径的起始点
+    // ctx.moveTo(50, 50)
+    // // 绘制一条到坐标(150,50)的水平直线
+    // ctx.lineTo(150, 50)
+    // // 坐标点(150,50)就是绘制弧线时的当前端点
+
+    // // 端点1
+    // const p1 = {
+    //     x : 200,
+    //     y : 50
+    // }
+    // // 端点2
+    // const p2 = {
+    //     x : 200,
+    //     y : 100         
+    // }
+    // //绘制与当前端点、端点1、端点2三个点所形成的夹角的两边相切并且半径为50px的圆的一段弧线
+    // ctx.arcTo(p1.x, p1.y, p2.x, p2.y, 50)
+
+    // // 设置线条颜色为蓝色
+    // ctx.strokeStyle = "blue"
+    // // 按照上述绘制路径绘制弧线
+    // ctx.stroke()
+
+
+
+    /**
+     *  例三：二次赛贝尔曲线
+     *  quadraticCurveTo(cp1x, cp1y, x, y) 绘制二次贝塞尔曲线，cp1x,cp1y为一个控制点，x,y为结束点
+     **/
+    // const ctx = canvas.getContext('2d')
+    // ctx.moveTo(100, 100)
+    // ctx.quadraticCurveTo(125, 50, 200, 75)
+    // ctx.stroke()
+
+
+
+    /**
+     *  例四：三次赛贝尔曲线
+     *  bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y) 绘制三次贝塞尔曲线，cp1x,cp1y为控制点一，cp2x,cp2y为控制点二，x,y为结束点
+     **/
+
+
+
+    /**
+     *  例五：绘制文本
+     *  fillText(text, x, y [, maxWidth])  在指定的(x,y)位置填充指定的文本，绘制的最大宽度是可选的.
+     *  strokeText(text, x, y [, maxWidth])  在指定的(x,y)位置绘制文本边框，绘制的最大宽度是可选的.
+     **/
+    //  const ctx = canvas.getContext('2d')
+
+    //   ctx.font = '30px 宋体'
+    //   ctx.fillText('你好你好你好', 100, 100)
+
+    //   ctx.font = '30px 宋体'
+    //   ctx.strokeText('你好你好你好', 100, 200)
+      // 补充说明：文本的样式
+      // font = value
+      // 当前我们用来绘制文本的样式. 这个字符串使用和 CSS font 属性相同的语法. 默认的字体是 10px sans-serif。
+      // textAlign = value
+      // 文本对齐选项. 可选的值包括：start, end, left, right, center. 默认值是 start。
+      // textBaseline = value
+      // 基线对齐选项. 可选的值包括：top, hanging, middle, alphabetic, ideographic, bottom。默认值是 alphabetic。
+      // direction = value
+      // 文本方向。可能的值包括：ltr, rtl, inherit。默认值是 inherit
+
+
+
+    /**
+     *  例六：绘制图片
+     *  drawImage(image, dx, dy)
+     *  drawImage(image, dx, dy, dWidth, dHeight)
+     *  drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+     **/
+    // const ctx = canvas.getContext('2d')
+    // const image = new Image()
+    // image.src =
+    // 'https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5e7e4005461436aa0d0d7e4cccf3f24~tplv-k3u1fbpfcp-watermark.image'
+    // image.onload = function () {
+    //     ctx.drawImage(image, 520, 180, 520, 1000, 100, 100, 120, 320)
+    // }
+    // 补充说明：形变
+    // translate(x, y)： 移动，该方法接受两个参数。x 是左右偏移量，y 是上下偏移量，如右图所示。
+    // rotate(angle)： 旋转，该方法只接受一个参数：旋转的角度(angle)，它是顺时针方向的，以弧度为单位的值。
+    // scale(x, y)： 缩放，该方法可以缩放画布的水平和垂直的单位。两个参数都是实数，可以为负数，x 为水平缩放因子，y 为垂直缩放因子，如果比1小，会缩小图形， 如果比1大会放大图形。默认值为1， 为实际大小。
+
+
+
+
+    // --------- 升级概念 -----------
+    /**
+     * 状态的保存和恢复
+     * save()：保存画布(canvas)的所有状态
+     *    - 当前的坐标变换信息（比如旋转rotate()或平移setTransform()）
+     *    - 当前剪贴区域
+     *    - 图形上下文对象（CanvasRenderingContext2D）的当前属性值
+     * restore()：恢复画布状态
+     **/
+    // const ctx = canvas.getContext('2d')
+
+    // ctx.fillStyle = 'red'
+    // ctx.fillRect(0, 0, 400, 30)
+    // ctx.save() // 保存当前状态 01
+
+    // ctx.fillStyle = 'blue'
+    // ctx.fillRect(0, 30, 400, 30)
+    // ctx.save() // 保存当前状态 02
+
+    // ctx.fillStyle = 'yellow'
+    // ctx.fillRect(0, 60, 400, 30)
+
+    // ctx.restore() // 取出保存的状态 02 恢复
+    // ctx.fillRect(0, 90, 400, 30)
+
+    // ctx.restore() // 取出保存的状态 01 恢复
+    // ctx.fillRect(0, 120, 400, 30)
+
+
+
+    /**
+     *  合成
+     *  globalCompositeOperation = type： 这个属性设定了在画新图形时采用的遮盖策略，其值是一个标识12种遮盖方式的字符串
+     **/
+    // const ctx = canvas.getContext('2d')
+    // ctx.fillStyle = 'deeppink'
+    // ctx.arc(100, 100, 50, 0, Math.PI * 2, false)
+    // ctx.fill()
+    // // destination-over, source-inm, destination-in, source-out, destination-out, source-atop, destination-atop, 
+    // // lighter: 两个重叠图形的颜色是通过颜色值相加来确定的, 
+    // // copy: 只显示新图形, 
+    // // xor: 图像中，那些重叠和正常绘制之外的其他地方是透明的, 
+    // // multiply: 将顶层像素与底层相应像素相乘，结果是一幅更黑暗的图片
+    // // screen：像素被倒转，相乘，再倒转，结果是一幅更明亮的图片
+    // ctx.globalCompositeOperation = 'source-over' 
+    // ctx.fillStyle = 'blue'
+    // ctx.fillRect(100, 100, 100, 100)
+
+    
+
+    /**
+     *  裁剪
+     *  clip()：将当前正在构建的路径转换为当前的裁剪路径
+     **/
+    // const ctx = canvas.getContext('2d')
+
+    // ctx.arc(100, 100, 75, 0, Math.PI * 2, false)
+    // ctx.clip()
+
+    // ctx.fillRect(0, 0, 100, 100)
+
+
+
+    // --------- 样式和颜色 -----------
+    // 颜色 >>>
+    // fillStyle = color 设置图形的填充颜色。
+    // strokeStyle = color 设置图形轮廓的颜色。
+    // globalAlpha = transparencyValue 这个属性影响到 canvas 里所有图形的透明度，有效的值范围是 0.0 （完全透明）到 1.0（完全不透明），默认是 1.0
+    // 线型 >>>
+    // lineWidth = value  设置线条宽度。
+    // lineCap = type  设置线条末端样式，type取以下值:
+    // butt 线段末端以方形结束，默认值
+    // round 线段末端以圆形结束。
+    // square 线段末端以方形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
+    // lineJoin = type  设定线条与线条间接合处的样式，type取以下值：
+    // round 通过填充一个额外的，圆心在相连部分末端的扇形，绘制拐角的形状。 圆角的半径是线段的宽度。
+    // bevel 在相连部分的末端填充一个额外的以三角形为底的区域， 每个部分都有各自独立的矩形拐角。
+    // miter 默认值，通过延伸相连部分的外边缘，使其相交于一点，形成一个额外的菱形区域。这个设置可以通过 miterLimit 属性看到效果
+    // setLineDash(segments) 设置当前虚线样式。
+    // segments：
+    // 一个Array数组。一组描述交替绘制线段和间距（坐标空间单位）长度的数字。 如果数组元素的数量是奇数， 数组的元素会被复制并重复。例如， [5, 15, 25] 会变成 [5, 15, 25, 5, 15, 25]。
+    // lineDashOffset = value 设置虚线样式的起始偏移量
+
+    // const ctx = canvas.getContext('2d')
+    // let y = 20
+    // function drawDashedLine(pattern) {
+    //   ctx.beginPath()
+    //   ctx.setLineDash(pattern)
+    //   ctx.moveTo(0, y)
+    //   ctx.lineTo(300, y)
+    //   ctx.stroke()
+    //   y += 20
+    // }
+    // drawDashedLine([])
+    // drawDashedLine([1, 1])
+    // drawDashedLine([10, 10])
+    // drawDashedLine([20, 5])
+    // drawDashedLine([15, 3, 3, 3])
+    // drawDashedLine([20, 3, 3, 3, 3, 3, 3, 3])
+    // drawDashedLine([12, 3, 3])  // 等同于 [12, 3, 3, 12, 3, 3]
+
+
+    // 虚线框蚂蚁线
+    // const ctx = canvas.getContext('2d')
+    // var offset = 0
+    // function draw() {
+    //   ctx.clearRect(0, 0, canvas.width, canvas.height)
+    //   ctx.setLineDash([4, 2])
+    //   ctx.lineDashOffset = -offset
+    //   ctx.strokeRect(10, 10, 100, 100)
+    // }
+    // function march() {
+    //   offset++
+    //   if (offset > 16) {
+    //     offset = 0
+    //   }
+    //   draw()
+    // }
+    // setInterval(() => {
+    //   march()
+    // }, 20)
+
+
+    // 渐变
+    // createLinearGradient(x1, y1, x2, y2)：该方法接受 4 个参数，表示渐变的起点 (x1,y1) 与终点 (x2,y2)
+    // const ctx = canvas.getContext('2d')
+    // // 线性渐变
+    // const linear = ctx.createLinearGradient(100, 100, 100, 300)
+    // linear.addColorStop(0, 'red')
+    // linear.addColorStop(0.2, 'orange')
+    // linear.addColorStop(0.4, 'yellow')
+    // linear.addColorStop(0.6, 'green')
+    // linear.addColorStop(0.8, 'blue')
+    // linear.addColorStop(1, 'purple')
+    // ctx.fillStyle = linear
+    // ctx.fillRect(100, 100, 200, 200)
+
+    
+    // 阴影
+    // shadowOffsetX = float
+    // shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。
+
+    // shadowOffsetY = float
+    // shadowOffsetX 和 shadowOffsetY 用来设定阴影在 X 和 Y 轴的延伸距离，它们是不受变换矩阵所影响的。负值表示阴影会往上或左延伸，正值则表示会往下或右延伸，它们默认都为 0。
+
+    // shadowBlur = float
+    // shadowBlur 用于设定阴影的模糊程度，其数值并不跟像素数量挂钩，也不受变换矩阵的影响，默认为 0。
+
+    // shadowColor = color
+    // shadowColor 是标准的 CSS 颜色值，用于设定阴影颜色效果，默认是全透明的黑色。
+    const ctx = canvas.getContext('2d')
+
+    ctx.shadowOffsetX = 10
+    ctx.shadowOffsetY = 10
+    ctx.shadowBlur = 3
+    ctx.shadowColor = 'red'
+    ctx.font = '30px 宋体'
+    ctx.fillText('你好你好你好你好', 100, 100)
+
+
+  </script>
+</body>
+</html>

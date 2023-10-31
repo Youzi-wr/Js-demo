@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+.box {
+  position: relative;
+  padding: 50px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 1px solid #a0b8f3;
+  animation: spin 3s infinite linear;
+}
+
+.ball {
+  display: inline-block;
+  background: #a0b8f3;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  animation: ball-spin 3s infinite linear;
+  color: #fff;
+  position: absolute;
+  text-align: center;
+  left: 45px;
+  top: 45px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(-30deg) scaleY(0.5) rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-30deg) scaleY(0.5) rotate(360deg);
+  }
+}
+
+@keyframes ball-spin {
+  0% {
+    transform: rotate(0deg) scaleY(2) rotate(30deg) scale(1);
+  }
+
+  100% {
+    transform: rotate(-360deg) scaleY(2) rotate(30deg) scale(1);
+  }
+}
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="ball"></div>
+  </div>
+</body>
+
+</html>
